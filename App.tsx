@@ -22,10 +22,12 @@ import {
 import {
   Colors,
   DebugInstructions,
-  Header,
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import {Header} from './src/components/header/Header';
+import {Search} from './src/components/search/Search';
 
 const Section: React.FC<{
   title: string;
@@ -69,6 +71,13 @@ const App = () => {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
+        <View
+          style={{
+            padding: 14,
+            backgroundColor: 'white',
+          }}>
+          <Search />
+        </View>
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
