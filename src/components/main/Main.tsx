@@ -15,7 +15,7 @@ import CartIcon from '../../../assets/icons/Cart.svg';
 
 import {Header} from '../header/Header';
 import {Search} from '../search/Search';
-import {TradeItemOverview} from '../trade-item-overview/TradeItemOverview';
+import {TradeItemPreview} from '../trade-item-preview/TradeItemPreview';
 
 import {styles as iconStyles} from '../icon/styles';
 
@@ -55,7 +55,7 @@ export function Main() {
         </View>
         <View style={styles.items}>
           {items.map(item => (
-            <TradeItemOverview
+            <TradeItemPreview
               tradeItem={item}
               key={item.id}
               style={styles.item}

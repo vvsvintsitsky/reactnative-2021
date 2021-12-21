@@ -1,7 +1,8 @@
 import React from 'react';
-import {Image, Text, View, ViewStyle} from 'react-native';
+import {Image, View, ViewStyle} from 'react-native';
 
 import {TradeItem} from '../../api/types';
+import {TradeItemName} from '../trade-item-name/TradeItemName';
 
 import {TradeItemPrice} from '../trade-item-price/TradeItemPrice';
 
@@ -24,7 +25,7 @@ export function TradeItemOverview({
           style={styles.image}
         />
       </View>
-      <Text style={styles.name}>{tradeItem.name}</Text>
+      <TradeItemName style={styles.name} name={tradeItem.name} />
       <TradeItemPrice tradeItem={tradeItem} />
     </View>
   );
