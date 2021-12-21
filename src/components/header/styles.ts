@@ -6,5 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#008ACE',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
