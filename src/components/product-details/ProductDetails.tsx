@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  ScrollView,
-  View,
-  TouchableHighlight,
-  Image,
-  Text,
-  Button,
-} from 'react-native';
+import {ScrollView, View, TouchableHighlight, Image, Text} from 'react-native';
 
 import {TradeItem} from '../../api/types';
 
@@ -27,14 +18,14 @@ import {Section} from '../section/Section';
 import {styles as sectionStyles} from '../section/styles';
 
 import {styles} from './styles';
+import {TextButton} from '../text-button/TextButton';
 
 export function ProductDetails({
   children,
   tradeItem,
 }: React.PropsWithChildren<{tradeItem: TradeItem}>) {
   return (
-    <SafeAreaView>
-      <StatusBar />
+    <>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.root}>
@@ -68,15 +59,17 @@ export function ProductDetails({
         <View style={styles.details}>
           <View style={styles.sectionUnderline}>
             <TradeItemName name={tradeItem.name} />
-            <TradeItemPrice tradeItem={tradeItem} />
+            <TradeItemPrice tradeItem={tradeItem} style={styles.price} />
           </View>
           {children}
           <Section title="Description">
             <Text style={sectionStyles.content}>{tradeItem.description}</Text>
           </Section>
         </View>
-        <Button title="ADD TO CART" color="#008ACE" />
       </ScrollView>
-    </SafeAreaView>
+      <View style={styles.footer}>
+        <TextButton style={styles.addToCart}>ADD TO CART</TextButton>
+      </View>
+    </>
   );
 }

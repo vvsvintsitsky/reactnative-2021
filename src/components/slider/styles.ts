@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
   },
   itemViewContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   itemView: {
     alignItems: 'center',

@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
 
 const padding = 20;
+const buttonHeight = 40;
 
 export const styles = StyleSheet.create({
   root: {
     backgroundColor: 'white',
-    height: '100%',
   },
   header: {
     padding: 16,
@@ -24,6 +24,9 @@ export const styles = StyleSheet.create({
     lineHeight: 24,
     color: '#FFFFFF',
   },
+  price: {
+    marginTop: 15,
+  },
   slider: {
     width: '100%',
     padding,
@@ -31,6 +34,7 @@ export const styles = StyleSheet.create({
   image: {width: '100%', aspectRatio: 1},
   details: {
     padding,
+    marginBottom: buttonHeight,
   },
   sectionUnderline: {
     paddingBottom: 20,
@@ -38,13 +42,14 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, 0.25)',
   },
+  footer: {
+    position: 'absolute',
+    bottom: padding,
+    width: '100%',
+    paddingHorizontal: padding,
+  },
   addToCart: {
-    backgroundColor: '#008ACE',
-    fontFamily: 'Roboto',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    fontSize: 15,
-    lineHeight: 16,
-    color: '#FFFFFF',
+    height: buttonHeight,
+    width: '100%',
   },
 });

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  ScrollView,
-  View,
-  TouchableHighlight,
-  Text,
-} from 'react-native';
+import {ScrollView, View, TouchableHighlight, Text} from 'react-native';
 
 import {TradeItem} from '../../api/types';
 
@@ -33,36 +26,28 @@ const items: TradeItem[] = Array.from({length: 3}, (_, index) => ({
 
 export function Main() {
   return (
-    <SafeAreaView>
-      <StatusBar />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.root}>
-        <Header style={styles.header}>
-          <TouchableHighlight>
-            <BurgerIcon
-              style={iconStyles.root}
-              color={styles.headerIcon.color}
-            />
-          </TouchableHighlight>
-          <Text style={styles.headerText}>Ecommerce Store</Text>
-          <TouchableHighlight>
-            <CartIcon style={iconStyles.root} color={styles.headerIcon.color} />
-          </TouchableHighlight>
-        </Header>
-        <View style={styles.search}>
-          <Search />
-        </View>
-        <View style={styles.items}>
-          {items.map(item => (
-            <TradeItemPreview
-              tradeItem={item}
-              key={item.id}
-              style={styles.item}
-            />
-          ))}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.root}>
+      <Header style={styles.header}>
+        <TouchableHighlight>
+          <BurgerIcon style={iconStyles.root} color={styles.headerIcon.color} />
+        </TouchableHighlight>
+        <Text style={styles.headerText}>Ecommerce Store</Text>
+        <TouchableHighlight>
+          <CartIcon style={iconStyles.root} color={styles.headerIcon.color} />
+        </TouchableHighlight>
+      </Header>
+      <View style={styles.search}>
+        <Search />
+      </View>
+      <View style={styles.items}>
+        {items.map(item => (
+          <TradeItemPreview
+            tradeItem={item}
+            key={item.id}
+            style={styles.item}
+          />
+        ))}
+      </View>
+    </ScrollView>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, ViewStyle} from 'react-native';
 
 import {TradeItem} from '../../api/types';
 
@@ -9,9 +9,15 @@ function padUSD(price: number) {
   return `$${price}`;
 }
 
-export function TradeItemPrice({tradeItem}: {tradeItem: TradeItem}) {
+export function TradeItemPrice({
+  tradeItem,
+  style,
+}: {
+  tradeItem: TradeItem;
+  style?: ViewStyle;
+}) {
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, style]}>
       <Text style={[styles.text, styles.currentPrice]}>
         {padUSD(tradeItem.currentPrice)}
       </Text>
