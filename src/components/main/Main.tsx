@@ -15,17 +15,7 @@ import {styles as iconStyles} from '../icon/styles';
 
 import {styles} from './styles';
 
-const items: TradeItem[] = Array.from({length: 3}, (_, index) => ({
-  id: String(index),
-  name: `Item_${index}`,
-  description: '',
-  currentPrice: 1,
-  price: 2,
-  hasDiscount: true,
-  imageSrc: 'https://avatars.githubusercontent.com/u/17836706?v=4',
-}));
-
-export function Main() {
+export function Main({tradeItems}: {tradeItems: TradeItem[]}) {
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.root}>
       <Header style={styles.header}>
@@ -41,7 +31,7 @@ export function Main() {
         <Search />
       </View>
       <View style={styles.items}>
-        {items.map(item => (
+        {tradeItems.map(item => (
           <TradeItemPreview
             tradeItem={item}
             key={item.id}
