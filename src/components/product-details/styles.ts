@@ -5,9 +5,13 @@ const padding = 20;
 export const styles = StyleSheet.create({
   root: {
     backgroundColor: 'white',
+    height: '100%',
   },
   header: {
     padding: 16,
+  },
+  headerControls: {
+    flexDirection: 'row',
   },
   headerIcon: {
     color: '#FFFFFF',
@@ -20,24 +24,27 @@ export const styles = StyleSheet.create({
     lineHeight: 24,
     color: '#FFFFFF',
   },
-  search: {
+  slider: {
+    width: '100%',
     padding,
-    shadowColor: '#333333',
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    elevation: 20,
   },
-  items: {
+  image: {width: '100%', aspectRatio: 1},
+  details: {
     padding,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
   },
-  item: {
-    marginBottom: padding,
-    marginRight: padding,
-    width: '40%',
-    aspectRatio: 1,
+  sectionUnderline: {
+    paddingBottom: 20,
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.25)',
+  },
+  addToCart: {
+    backgroundColor: '#008ACE',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: 15,
+    lineHeight: 16,
+    color: '#FFFFFF',
   },
 });

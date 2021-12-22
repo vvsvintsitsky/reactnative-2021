@@ -16,9 +16,9 @@ export function Slider({
   return (
     <View style={styles.root}>
       <View style={styles.itemViewContainer}>
-        <PreviousIcon style={[iconStyles.root, styles.buttonIcon]} />
+        <PreviousIcon style={iconStyles.root} color={styles.buttonIcon.color} />
         <View style={styles.itemView}>{children}</View>
-        <NextIcon style={[iconStyles.root, styles.buttonIcon]} />
+        <NextIcon style={iconStyles.root} color={styles.buttonIcon.color} />
       </View>
       <View style={styles.itemPositionIndicator}>
         {Array.from({length: itemsQuantity}, (_, index) => (

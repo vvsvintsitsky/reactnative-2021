@@ -1,10 +1,10 @@
 import React from 'react';
 
 import {Main} from './src/components/main/Main';
-import {ProductDetails} from './src/components/product-details/ProductDetails';
+import {MobilePhoneDetails} from './src/components/mobile-phone-details/MobilePhoneDetails';
 
 const App = () => {
-  return <ProductDetails />;
+  return <MobilePhoneDetails />;
 };
 
 export default App;

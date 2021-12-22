@@ -3,20 +3,18 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   root: {
     width: '100%',
-    aspectRatio: 1,
-    justifyContent: 'center',
+    justifyItems: 'center',
   },
   itemViewContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   itemView: {
+    alignItems: 'center',
+    flex: 1,
     width: '100%',
+    marginHorizontal: 35,
   },
   buttonIcon: {
-    width: 6,
-    height: 19,
     color: '#C3C3C3',
   },
   positionIcon: {
@@ -29,6 +27,8 @@ export const styles = StyleSheet.create({
     color: '#008ACE',
   },
   itemPositionIndicator: {
+    marginTop: 30,
     flexDirection: 'row',
+    justifyContent: 'center',
   },
 });

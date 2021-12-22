@@ -6,6 +6,8 @@ import {
   View,
   TouchableHighlight,
   Image,
+  Text,
+  Button,
 } from 'react-native';
 
 import {TradeItem} from '../../api/types';
@@ -18,22 +20,18 @@ import {Header} from '../header/Header';
 
 import {styles as iconStyles} from '../icon/styles';
 
-import {styles} from './styles';
 import {Slider} from '../slider/Slider';
 import {TradeItemName} from '../trade-item-name/TradeItemName';
 import {TradeItemPrice} from '../trade-item-price/TradeItemPrice';
+import {Section} from '../section/Section';
+import {styles as sectionStyles} from '../section/styles';
 
-const item: TradeItem = {
-  id: '0',
-  name: 'Item_0',
-  description: '',
-  currentPrice: 1,
-  price: 2,
-  hasDiscount: true,
-  imageSrc: 'https://avatars.githubusercontent.com/u/17836706?v=4',
-};
+import {styles} from './styles';
 
-export function ProductDetails() {
+export function ProductDetails({
+  children,
+  tradeItem,
+}: React.PropsWithChildren<{tradeItem: TradeItem}>) {
   return (
     <SafeAreaView>
       <StatusBar />
@@ -47,7 +45,7 @@ export function ProductDetails() {
               color={styles.headerIcon.color}
             />
           </TouchableHighlight>
-          <View style={{flexDirection: 'row'}}>
+          <View style={styles.headerControls}>
             <TouchableHighlight>
               <HeartIcon
                 style={iconStyles.root}
@@ -62,17 +60,22 @@ export function ProductDetails() {
             </TouchableHighlight>
           </View>
         </Header>
-        <View style={styles.search}>
+        <View style={styles.slider}>
           <Slider itemsQuantity={4} currentItemIndex={1}>
-            <Image
-              source={{uri: item.imageSrc}}
-              style={{width: '80%', aspectRatio: 1}}
-            />
+            <Image source={{uri: tradeItem.imageSrc}} style={styles.image} />
           </Slider>
-          <TradeItemName name={item.name} />
-          <TradeItemPrice tradeItem={item} />
         </View>
-        <View style={styles.items}></View>
+        <View style={styles.details}>
+          <View style={styles.sectionUnderline}>
+            <TradeItemName name={tradeItem.name} />
+            <TradeItemPrice tradeItem={tradeItem} />
+          </View>
+          {children}
+          <Section title="Description">
+            <Text style={sectionStyles.content}>{tradeItem.description}</Text>
+          </Section>
+        </View>
+        <Button title="ADD TO CART" color="#008ACE" />
       </ScrollView>
     </SafeAreaView>
   );
