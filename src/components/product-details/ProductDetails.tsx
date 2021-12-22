@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, View, TouchableHighlight, Image, Text} from 'react-native';
+import {ScrollView, View, Image, Text} from 'react-native';
 
 import {TradeItem} from '../../api/types';
 
@@ -19,6 +19,7 @@ import {styles as sectionStyles} from '../section/styles';
 
 import {styles} from './styles';
 import {TextButton} from '../text-button/TextButton';
+import {InteractiveContent} from '../interactive-content/InteractiveContent';
 
 export function ProductDetails({
   children,
@@ -30,25 +31,25 @@ export function ProductDetails({
         contentInsetAdjustmentBehavior="automatic"
         style={styles.root}>
         <Header style={styles.header}>
-          <TouchableHighlight>
+          <InteractiveContent>
             <ArrowLeftIcon
               style={iconStyles.root}
               color={styles.headerIcon.color}
             />
-          </TouchableHighlight>
+          </InteractiveContent>
           <View style={styles.headerControls}>
-            <TouchableHighlight>
+            <InteractiveContent>
               <HeartIcon
                 style={iconStyles.root}
                 color={styles.headerIcon.color}
               />
-            </TouchableHighlight>
-            <TouchableHighlight>
+            </InteractiveContent>
+            <InteractiveContent interactiveStyle={styles.cartButton}>
               <CartIcon
                 style={iconStyles.root}
                 color={styles.headerIcon.color}
               />
-            </TouchableHighlight>
+            </InteractiveContent>
           </View>
         </Header>
         <View style={styles.slider}>

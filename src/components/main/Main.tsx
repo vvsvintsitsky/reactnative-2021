@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, View, TouchableHighlight, Text} from 'react-native';
+import {ScrollView, View, Text} from 'react-native';
 
 import {TradeItem} from '../../api/types';
 
@@ -9,6 +9,7 @@ import CartIcon from '../../../assets/icons/Cart.svg';
 import {Header} from '../header/Header';
 import {Search} from '../search/Search';
 import {TradeItemPreview} from '../trade-item-preview/TradeItemPreview';
+import {InteractiveContent} from '../interactive-content/InteractiveContent';
 
 import {styles as iconStyles} from '../icon/styles';
 
@@ -28,13 +29,13 @@ export function Main() {
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.root}>
       <Header style={styles.header}>
-        <TouchableHighlight>
+        <InteractiveContent>
           <BurgerIcon style={iconStyles.root} color={styles.headerIcon.color} />
-        </TouchableHighlight>
+        </InteractiveContent>
         <Text style={styles.headerText}>Ecommerce Store</Text>
-        <TouchableHighlight>
+        <InteractiveContent>
           <CartIcon style={iconStyles.root} color={styles.headerIcon.color} />
-        </TouchableHighlight>
+        </InteractiveContent>
       </Header>
       <View style={styles.search}>
         <Search />

@@ -16,6 +16,9 @@ export const styles = StyleSheet.create({
   headerIcon: {
     color: '#FFFFFF',
   },
+  cartButton: {
+    marginLeft: 30,
+  },
   headerText: {
     fontFamily: 'Roboto',
     fontStyle: 'normal',

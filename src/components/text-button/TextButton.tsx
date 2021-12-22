@@ -1,5 +1,6 @@
 import React from 'react';
-import {TouchableHighlight, ViewStyle, Text, TextStyle} from 'react-native';
+import {ViewStyle, Text, TextStyle} from 'react-native';
+import {InteractiveContent} from '../interactive-content/InteractiveContent';
 import {styles} from './styles';
 
 export function TextButton({
@@ -8,8 +9,8 @@ export function TextButton({
   textStyle,
 }: React.PropsWithChildren<{style?: ViewStyle; textStyle?: TextStyle}>) {
   return (
-    <TouchableHighlight style={[styles.root, style]}>
+    <InteractiveContent style={[styles.root, style]}>
       <Text style={[styles.text, textStyle]}>{children}</Text>
-    </TouchableHighlight>
+    </InteractiveContent>
   );
 }
