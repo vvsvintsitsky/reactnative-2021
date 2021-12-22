@@ -31,8 +31,8 @@ const App = () => {
   return (
     <SafeAreaView>
       <StatusBar />
-      {/* <MobilePhoneDetails mobilePhone={mobilePhone} /> */}
-      <Main tradeItems={items} />
+      <MobilePhoneDetails mobilePhone={mobilePhone} />
+      {/* <Main tradeItems={items} /> */}
     </SafeAreaView>
   );
 };

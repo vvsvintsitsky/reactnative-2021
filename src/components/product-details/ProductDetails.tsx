@@ -20,6 +20,7 @@ import {styles as sectionStyles} from '../section/styles';
 import {styles} from './styles';
 import {TextButton} from '../text-button/TextButton';
 import {InteractiveContent} from '../interactive-content/InteractiveContent';
+import {ShadowContainer} from '../shadow-container/ShadowContainer';
 
 export function ProductDetails({
   children,
@@ -68,9 +69,14 @@ export function ProductDetails({
           </Section>
         </View>
       </ScrollView>
-      <View style={styles.footer}>
+      <ShadowContainer
+        shadowViewStyle={styles.footer}
+        viewStyle={styles.footer}
+        distance={2}
+        startColor="#0000004D"
+        sides={['bottom']}>
         <TextButton style={styles.addToCart}>ADD TO CART</TextButton>
-      </View>
+      </ShadowContainer>
     </>
   );
 }
