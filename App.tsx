@@ -1,19 +1,12 @@
 import React from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
-import {MobilePhone, TradeItem} from './src/api/types';
+import {ApiClient} from './src/api/client/ApiClient';
+import {ApiClientContext} from './src/api/client/ApiClientContext';
+import {API_BASE} from './src/api/constants';
+import {MobilePhone} from './src/api/types';
 
-import {Main} from './src/components/main/Main';
 import {MobilePhoneDetails} from './src/components/mobile-phone-details/MobilePhoneDetails';
-
-const items: TradeItem[] = Array.from({length: 3}, (_, index) => ({
-  id: String(index),
-  name: `Item_${index}`,
-  description: '',
-  currentPrice: 1,
-  price: 2,
-  hasDiscount: true,
-  imageSrc: 'https://avatars.githubusercontent.com/u/17836706?v=4',
-}));
+import {MainScreen} from './src/main/MainScreen';
 
 const mobilePhone: MobilePhone = {
   id: '0',
@@ -28,12 +21,15 @@ const mobilePhone: MobilePhone = {
 };
 
 const App = () => {
+  const [apiClient] = React.useState(() => new ApiClient(API_BASE));
   return (
-    <SafeAreaView>
-      <StatusBar />
-      <MobilePhoneDetails mobilePhone={mobilePhone} />
-      {/* <Main tradeItems={items} /> */}
-    </SafeAreaView>
+    <ApiClientContext.Provider value={apiClient}>
+      <SafeAreaView>
+        <StatusBar />
+        {/* <MobilePhoneDetails mobilePhone={mobilePhone} /> */}
+        <MainScreen />
+      </SafeAreaView>
+    </ApiClientContext.Provider>
   );
 };
 

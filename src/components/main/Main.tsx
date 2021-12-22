@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, View, Text} from 'react-native';
+import {ScrollView, View, Text, RefreshControl} from 'react-native';
 
 import {TradeItem} from '../../api/types';
 
@@ -16,9 +16,22 @@ import {styles as iconStyles} from '../icon/styles';
 import {styles} from './styles';
 import {ShadowContainer} from '../shadow-container/ShadowContainer';
 
-export function Main({tradeItems}: {tradeItems: TradeItem[]}) {
+export function Main({
+  tradeItems,
+  refetch,
+  isLoading,
+}: {
+  tradeItems: TradeItem[];
+  refetch: () => void;
+  isLoading: boolean;
+}) {
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.root}>
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      style={styles.root}
+      refreshControl={
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+      }>
       <Header style={styles.header}>
         <InteractiveContent>
           <BurgerIcon style={iconStyles.root} color={styles.headerIcon.color} />

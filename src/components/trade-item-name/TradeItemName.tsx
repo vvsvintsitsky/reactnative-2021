@@ -10,5 +10,9 @@ export function TradeItemName({
   name: string;
   style?: TextStyle;
 }) {
-  return <Text style={[styles.root, style]}>{name}</Text>;
+  return (
+    <Text style={[styles.root, style]} numberOfLines={1}>
+      {name}
+    </Text>
+  );
 }
