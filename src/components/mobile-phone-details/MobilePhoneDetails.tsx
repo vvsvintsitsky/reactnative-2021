@@ -1,10 +1,13 @@
 import React from 'react';
 
-import {TradeItem} from '../../api/types';
+import {MobilePhone} from '../../api/types';
 
 import {ProductDetails} from '../product-details/ProductDetails';
+import {styles as productDetailsStyles} from '../product-details/styles';
+import {Section} from '../section/Section';
+import {SingleSelect} from '../single-select/SingleSelect';
 
-const item: TradeItem = {
+const item: MobilePhone = {
   id: '0',
   name: 'Item_0',
   description:
@@ -13,8 +16,21 @@ const item: TradeItem = {
   price: 2,
   hasDiscount: true,
   imageSrc: 'https://avatars.githubusercontent.com/u/17836706?v=4',
+  colors: ['Blue'],
 };
 
-export function MobilePhoneDetails() {
-  return <ProductDetails tradeItem={item} />;
+export function MobilePhoneDetails({
+  mobilePhone = item,
+}: {
+  mobilePhone: MobilePhone;
+}) {
+  return (
+    <ProductDetails tradeItem={mobilePhone}>
+      <Section
+        title="Select Color"
+        style={productDetailsStyles.sectionUnderline}>
+        <SingleSelect options={mobilePhone.colors} />
+      </Section>
+    </ProductDetails>
+  );
 }

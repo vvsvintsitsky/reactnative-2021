@@ -12,3 +12,11 @@ export interface TradeItem extends Identifiable {
   hasDiscount: boolean;
   description: string;
 }
+
+export type Color = string;
+
+export interface Colorable {
+  colors: Color[];
+}
+
+export interface MobilePhone extends TradeItem, Colorable {}
