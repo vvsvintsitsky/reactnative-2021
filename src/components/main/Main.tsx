@@ -14,6 +14,7 @@ import {InteractiveContent} from '../interactive-content/InteractiveContent';
 import {styles as iconStyles} from '../icon/styles';
 
 import {styles} from './styles';
+import {ShadowContainer} from '../shadow-container/ShadowContainer';
 
 export function Main({tradeItems}: {tradeItems: TradeItem[]}) {
   return (
@@ -27,16 +28,26 @@ export function Main({tradeItems}: {tradeItems: TradeItem[]}) {
           <CartIcon style={iconStyles.root} color={styles.headerIcon.color} />
         </InteractiveContent>
       </Header>
-      <View style={styles.search}>
-        <Search />
-      </View>
+      <ShadowContainer distance={4} startColor="#0000004D" sides={['bottom']}>
+        <View style={styles.search}>
+          <Search style={styles.searchInput} />
+        </View>
+      </ShadowContainer>
       <View style={styles.items}>
         {tradeItems.map(item => (
-          <TradeItemPreview
-            tradeItem={item}
+          <ShadowContainer
             key={item.id}
-            style={styles.item}
-          />
+            distance={2}
+            startColor="#00000040"
+            sides={['left', 'right']}
+            containerViewStyle={styles.itemShadow}>
+            <ShadowContainer
+              distance={4}
+              startColor="#00000040"
+              sides={['bottom']}>
+              <TradeItemPreview tradeItem={item} style={styles.item} />
+            </ShadowContainer>
+          </ShadowContainer>
         ))}
       </View>
     </ScrollView>

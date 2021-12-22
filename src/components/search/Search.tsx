@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, ViewStyle} from 'react-native';
 
 import SearchIcon from '../../../assets/icons/Search.svg';
 
@@ -10,9 +10,9 @@ import {styles as textInputStyles} from '../text-input/styles';
 
 import {styles} from './styles';
 
-export function Search() {
+export function Search({style}: {style?: ViewStyle}) {
   return (
-    <View style={[textInputStyles.root, styles.root]}>
+    <View style={[textInputStyles.root, styles.root, style]}>
       <SearchIcon style={[iconStyles.root, styles.icon]} />
       <TextInput style={styles.input} />
     </View>

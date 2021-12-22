@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   root: {
     padding: 5,
     paddingBottom: 10,
-    width: 160,
+    aspectRatio: 1,
   },
   imageContainer: {
     width: '100%',

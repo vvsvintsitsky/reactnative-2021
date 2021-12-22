@@ -23,11 +23,10 @@ export const styles = StyleSheet.create({
   },
   search: {
     padding,
-    shadowColor: '#333333',
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    elevation: 20,
+    width: '100%',
+  },
+  searchInput: {
+    width: '100%',
   },
   items: {
     padding,
@@ -35,10 +34,10 @@ export const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-  item: {
+  itemShadow: {
     marginBottom: padding,
-    marginRight: padding,
-    width: '40%',
+  },
+  item: {
     aspectRatio: 1,
   },
 });
