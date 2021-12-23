@@ -1,7 +1,7 @@
 import React from 'react';
 import {ID} from '../../api/types';
 
-import {ProductDetails} from '../../components/product-details/ProductDetails';
+import {ProductDetails} from './ProductDetails';
 import {useProductDetailscreen} from './useProductDetailscreen';
 
 export function ProductDetailsScreen({productId}: {productId: ID}) {

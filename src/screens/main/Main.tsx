@@ -6,15 +6,15 @@ import {TradeItem} from '../../api/types';
 import BurgerIcon from '../../../assets/icons/Burger.svg';
 import CartIcon from '../../../assets/icons/Cart.svg';
 
-import {Header} from '../header/Header';
-import {Search} from '../search/Search';
-import {TradeItemPreview} from '../trade-item-preview/TradeItemPreview';
-import {InteractiveContent} from '../interactive-content/InteractiveContent';
+import {Header} from '../../components/header/Header';
+import {Search} from '../../components/search/Search';
+import {TradeItemPreview} from '../../components/trade-item-preview/TradeItemPreview';
+import {InteractiveContent} from '../../components/interactive-content/InteractiveContent';
 
-import {styles as iconStyles} from '../icon/styles';
+import {styles as iconStyles} from '../../components/icon/styles';
 
 import {styles} from './styles';
-import {ShadowContainer} from '../shadow-container/ShadowContainer';
+import {ShadowContainer} from '../../components/shadow-container/ShadowContainer';
 
 export function Main({
   tradeItems,

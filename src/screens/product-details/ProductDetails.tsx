@@ -7,21 +7,22 @@ import ArrowLeftIcon from '../../../assets/icons/ArrowLeft.svg';
 import HeartIcon from '../../../assets/icons/Heart.svg';
 import CartIcon from '../../../assets/icons/Cart.svg';
 
-import {Header} from '../header/Header';
+import {Header} from '../../components/header/Header';
 
-import {styles as iconStyles} from '../icon/styles';
+import {styles as iconStyles} from '../../components/icon/styles';
 
-import {Slider} from '../slider/Slider';
-import {TradeItemName} from '../trade-item-name/TradeItemName';
-import {TradeItemPrice} from '../trade-item-price/TradeItemPrice';
-import {Section} from '../section/Section';
-import {styles as sectionStyles} from '../section/styles';
+import {Slider} from '../../components/slider/Slider';
+import {TradeItemName} from '../../components/trade-item-name/TradeItemName';
+import {TradeItemPrice} from '../../components/trade-item-price/TradeItemPrice';
+import {Section} from '../../components/section/Section';
+import {styles as sectionStyles} from '../../components/section/styles';
+
+import {TextButton} from '../../components/text-button/TextButton';
+import {InteractiveContent} from '../../components/interactive-content/InteractiveContent';
+import {ShadowContainer} from '../../components/shadow-container/ShadowContainer';
+import {SingleSelect} from '../../components/single-select/SingleSelect';
 
 import {styles} from './styles';
-import {TextButton} from '../text-button/TextButton';
-import {InteractiveContent} from '../interactive-content/InteractiveContent';
-import {ShadowContainer} from '../shadow-container/ShadowContainer';
-import {SingleSelect} from '../single-select/SingleSelect';
 
 export function ProductDetails({
   tradeItem,
