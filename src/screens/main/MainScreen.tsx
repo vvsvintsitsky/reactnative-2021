@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Main} from '../components/main/Main';
+import {Main} from '../../components/main/Main';
 import {useMainScreen} from './useMainScreen';
 
 export function MainScreen() {

@@ -7,16 +7,9 @@ export interface Identifiable {
 export interface TradeItem extends Identifiable {
   price: number;
   name: string;
-  imageSrc: string;
+  images: string[];
+  options: {id: ID; name: string}[];
   currentPrice: number;
   hasDiscount: boolean;
   description: string;
 }
-
-export type Color = string;
-
-export interface Colorable {
-  colors: Color[];
-}
-
-export interface MobilePhone extends TradeItem, Colorable {}

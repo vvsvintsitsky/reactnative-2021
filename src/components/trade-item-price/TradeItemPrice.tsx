@@ -21,7 +21,11 @@ export function TradeItemPrice({
       <Text style={[styles.text, styles.currentPrice]}>
         {padUSD(tradeItem.currentPrice)}
       </Text>
-      <Text style={[styles.text, styles.price]}>{padUSD(tradeItem.price)}</Text>
+      {tradeItem.currentPrice !== tradeItem.price && (
+        <Text style={[styles.text, styles.price]}>
+          {padUSD(tradeItem.price)}
+        </Text>
+      )}
       {tradeItem.hasDiscount && (
         <Text style={[styles.text, styles.discount]}>
           {`${Math.floor(

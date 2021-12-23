@@ -8,6 +8,13 @@ export interface Product {
     name: string;
     compare_at_price: string | null;
   };
+  relationships: {
+    option_types: {
+      data: {
+        id: string;
+      }[];
+    };
+  };
 }
 
 export const RESOURCES = {
@@ -17,6 +24,6 @@ export const RESOURCES = {
   },
   GET_PRODUCT: {
     method: Methods.Get,
-    path: '/api/v2/storefront/products/',
+    path: '/api/v2/storefront/products/{id}',
   },
 };

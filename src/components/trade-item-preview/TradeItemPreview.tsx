@@ -20,7 +20,7 @@ export function TradeItemPreview({
       <View style={styles.imageContainer}>
         <Image
           source={{
-            uri: tradeItem.imageSrc,
+            uri: tradeItem.images[0],
           }}
           style={styles.image}
         />

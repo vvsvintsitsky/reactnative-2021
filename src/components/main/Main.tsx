@@ -48,23 +48,24 @@ export function Main({
       </ShadowContainer>
       <View style={styles.items}>
         {tradeItems.map(item => (
-          <ShadowContainer
-            corners={[]}
-            radius={5}
-            key={item.id}
-            distance={2}
-            startColor="#00000040"
-            sides={['left', 'right']}
-            containerViewStyle={styles.itemShadow}>
+          <InteractiveContent key={item.id}>
             <ShadowContainer
-              corners={['bottomLeft', 'bottomRight']}
+              corners={[]}
               radius={5}
-              distance={4}
+              distance={2}
               startColor="#00000040"
-              sides={['bottom']}>
-              <TradeItemPreview tradeItem={item} style={styles.item} />
+              sides={['left', 'right']}
+              containerViewStyle={styles.itemShadow}>
+              <ShadowContainer
+                corners={['bottomLeft', 'bottomRight']}
+                radius={5}
+                distance={4}
+                startColor="#00000040"
+                sides={['bottom']}>
+                <TradeItemPreview tradeItem={item} style={styles.item} />
+              </ShadowContainer>
             </ShadowContainer>
-          </ShadowContainer>
+          </InteractiveContent>
         ))}
       </View>
     </ScrollView>

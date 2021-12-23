@@ -1,6 +1,6 @@
 import React from 'react';
-import {useGetProducts} from '../api/useGetProducts';
-import {useRefetch} from '../api/useRefetch';
+import {useGetProducts} from '../../api/useGetProducts';
+import {useRefetch} from '../../api/useRefetch';
 
 export function useMainScreen() {
   const getProducts = useGetProducts();

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, View, Image, Text} from 'react-native';
+import {ScrollView, View, Image, Text, RefreshControl} from 'react-native';
 
 import {TradeItem} from '../../api/types';
 
@@ -21,16 +21,27 @@ import {styles} from './styles';
 import {TextButton} from '../text-button/TextButton';
 import {InteractiveContent} from '../interactive-content/InteractiveContent';
 import {ShadowContainer} from '../shadow-container/ShadowContainer';
+import {SingleSelect} from '../single-select/SingleSelect';
 
 export function ProductDetails({
-  children,
   tradeItem,
-}: React.PropsWithChildren<{tradeItem: TradeItem}>) {
+  currentImageIndex,
+  isLoading,
+  refetch,
+}: {
+  tradeItem?: TradeItem;
+  currentImageIndex: number;
+  isLoading: boolean;
+  refetch: () => void;
+}) {
   return (
     <>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={styles.root}>
+        style={styles.root}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+        }>
         <Header style={styles.header}>
           <InteractiveContent>
             <ArrowLeftIcon
@@ -53,30 +64,47 @@ export function ProductDetails({
             </InteractiveContent>
           </View>
         </Header>
-        <View style={styles.slider}>
-          <Slider itemsQuantity={4} currentItemIndex={1}>
-            <Image source={{uri: tradeItem.imageSrc}} style={styles.image} />
-          </Slider>
-        </View>
-        <View style={styles.details}>
-          <View style={styles.sectionUnderline}>
-            <TradeItemName name={tradeItem.name} />
-            <TradeItemPrice tradeItem={tradeItem} style={styles.price} />
-          </View>
-          {children}
-          <Section title="Description">
-            <Text style={sectionStyles.content}>{tradeItem.description}</Text>
-          </Section>
-        </View>
+        {tradeItem && (
+          <>
+            <View style={styles.slider}>
+              <Slider
+                itemsQuantity={tradeItem.images.length}
+                currentItemIndex={currentImageIndex}>
+                <Image
+                  source={{uri: tradeItem.images[currentImageIndex]}}
+                  style={styles.image}
+                />
+              </Slider>
+            </View>
+            <View style={styles.details}>
+              <View style={styles.sectionUnderline}>
+                <TradeItemName name={tradeItem.name} />
+                <TradeItemPrice tradeItem={tradeItem} style={styles.price} />
+              </View>
+              <Section title="Select Option" style={styles.sectionUnderline}>
+                <SingleSelect
+                  options={tradeItem.options.map(option => option.id)}
+                />
+              </Section>
+              <Section title="Description">
+                <Text style={sectionStyles.content}>
+                  {tradeItem.description}
+                </Text>
+              </Section>
+            </View>
+          </>
+        )}
       </ScrollView>
-      <ShadowContainer
-        shadowViewStyle={styles.footer}
-        viewStyle={styles.footer}
-        distance={2}
-        startColor="#0000004D"
-        sides={['bottom']}>
-        <TextButton style={styles.addToCart}>ADD TO CART</TextButton>
-      </ShadowContainer>
+      {tradeItem && (
+        <ShadowContainer
+          shadowViewStyle={styles.footer}
+          viewStyle={styles.footer}
+          distance={2}
+          startColor="#0000004D"
+          sides={['bottom']}>
+          <TextButton style={styles.addToCart}>ADD TO CART</TextButton>
+        </ShadowContainer>
+      )}
     </>
   );
 }
