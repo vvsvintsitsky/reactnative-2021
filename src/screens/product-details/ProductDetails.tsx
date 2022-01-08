@@ -3,14 +3,6 @@ import {ScrollView, View, Image, Text, RefreshControl} from 'react-native';
 
 import {TradeItem} from '../../api/types';
 
-import ArrowLeftIcon from '../../../assets/icons/ArrowLeft.svg';
-import HeartIcon from '../../../assets/icons/Heart.svg';
-import CartIcon from '../../../assets/icons/Cart.svg';
-
-import {Header} from '../../components/header/Header';
-
-import {styles as iconStyles} from '../../components/icon/styles';
-
 import {Slider} from '../../components/slider/Slider';
 import {TradeItemName} from '../../components/trade-item-name/TradeItemName';
 import {TradeItemPrice} from '../../components/trade-item-price/TradeItemPrice';
@@ -18,7 +10,6 @@ import {Section} from '../../components/section/Section';
 import {styles as sectionStyles} from '../../components/section/styles';
 
 import {TextButton} from '../../components/text-button/TextButton';
-import {InteractiveContent} from '../../components/interactive-content/InteractiveContent';
 import {ShadowContainer} from '../../components/shadow-container/ShadowContainer';
 import {SingleSelect} from '../../components/single-select/SingleSelect';
 
@@ -43,28 +34,6 @@ export function ProductDetails({
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={refetch} />
         }>
-        <Header style={styles.header}>
-          <InteractiveContent>
-            <ArrowLeftIcon
-              style={iconStyles.root}
-              color={styles.headerIcon.color}
-            />
-          </InteractiveContent>
-          <View style={styles.headerControls}>
-            <InteractiveContent>
-              <HeartIcon
-                style={iconStyles.root}
-                color={styles.headerIcon.color}
-              />
-            </InteractiveContent>
-            <InteractiveContent interactiveStyle={styles.cartButton}>
-              <CartIcon
-                style={iconStyles.root}
-                color={styles.headerIcon.color}
-              />
-            </InteractiveContent>
-          </View>
-        </Header>
         {tradeItem && (
           <>
             <View style={styles.slider}>

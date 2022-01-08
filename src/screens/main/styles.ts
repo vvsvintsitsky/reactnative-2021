@@ -5,10 +5,10 @@ const padding = 20;
 export const styles = StyleSheet.create({
   root: {
     backgroundColor: 'white',
-    height: '100%',
   },
   header: {
     padding: 16,
+    height: 55,
   },
   headerIcon: {
     color: '#FFFFFF',

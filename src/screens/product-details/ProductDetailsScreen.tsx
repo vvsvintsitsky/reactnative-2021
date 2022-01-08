@@ -1,12 +1,15 @@
 import React from 'react';
-import {ID} from '../../api/types';
+import {MainRoutes} from '../../navigation/MainRoutes';
+import {RouteProps} from '../../navigation/types';
 
 import {ProductDetails} from './ProductDetails';
 import {useProductDetailscreen} from './useProductDetailscreen';
 
-export function ProductDetailsScreen({productId}: {productId: ID}) {
+export function ProductDetailsScreen({
+  route,
+}: RouteProps<MainRoutes.ProductDetails>) {
   const {isLoading, product, refetch} = useProductDetailscreen({
-    id: productId,
+    id: route.params.productId,
   });
 
   return (
