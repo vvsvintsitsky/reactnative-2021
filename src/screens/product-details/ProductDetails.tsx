@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, View, Image, Text, RefreshControl} from 'react-native';
 
-import {TradeItem} from '../../api/types';
+import {TradeItem, TradeItemOption} from '../../api/types';
 
 import {Slider} from '../../components/slider/Slider';
 import {TradeItemName} from '../../components/trade-item-name/TradeItemName';
@@ -20,11 +20,17 @@ export function ProductDetails({
   currentImageIndex,
   isLoading,
   refetch,
+  onAddToCart,
+  selectColor,
+  selectedColor,
 }: {
   tradeItem?: TradeItem;
   currentImageIndex: number;
   isLoading: boolean;
   refetch: () => void;
+  onAddToCart: () => void;
+  selectColor: (colorOption: TradeItemOption) => void;
+  selectedColor?: TradeItemOption;
 }) {
   return (
     <>
@@ -51,9 +57,11 @@ export function ProductDetails({
                 <TradeItemName name={tradeItem.name} />
                 <TradeItemPrice tradeItem={tradeItem} style={styles.price} />
               </View>
-              <Section title="Select Option" style={styles.sectionUnderline}>
+              <Section title="Select Color" style={styles.sectionUnderline}>
                 <SingleSelect
-                  options={tradeItem.options.map(option => option.id)}
+                  options={tradeItem.options}
+                  onSelect={selectColor}
+                  selectedValue={selectedColor}
                 />
               </Section>
               <Section title="Description">
@@ -72,7 +80,9 @@ export function ProductDetails({
           distance={2}
           startColor="#0000004D"
           sides={['bottom']}>
-          <TextButton style={styles.addToCart}>ADD TO CART</TextButton>
+          <TextButton style={styles.addToCart} onPress={onAddToCart}>
+            ADD TO CART
+          </TextButton>
         </ShadowContainer>
       )}
     </>

@@ -20,9 +20,9 @@ export function mapProductToTradeItem({
       {length: 5},
       () => `https://picsum.photos/id/${id}/200/200`,
     ),
-    options: relationships.option_types.data.map(option => ({
+    options: relationships.option_types.data.map((option, index) => ({
       id: option.id,
-      name: option.id,
+      name: `#${Array.from({length: 6}).fill(index).join('')}`,
     })),
     currentPrice: Number(attributes.price),
     hasDiscount: !!currentPrice && currentPrice - price < 0,

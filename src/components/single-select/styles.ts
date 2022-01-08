@@ -5,10 +5,12 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   option: {
-    backgroundColor: '#F7F7F7',
     paddingVertical: 5,
     paddingHorizontal: 10,
     marginRight: 10,
+  },
+  unselected: {
+    backgroundColor: '#F7F7F7',
   },
   optionText: {
     color: '#4A4A4A',

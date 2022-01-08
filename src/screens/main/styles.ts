@@ -10,9 +10,6 @@ export const styles = StyleSheet.create({
     padding: 16,
     height: 55,
   },
-  headerIcon: {
-    color: '#FFFFFF',
-  },
   headerText: {
     fontFamily: 'Roboto',
     fontStyle: 'normal',

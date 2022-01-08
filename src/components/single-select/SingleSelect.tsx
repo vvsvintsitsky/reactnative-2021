@@ -7,23 +7,37 @@ function getOptionKeyStub(index: number) {
   return String(index);
 }
 
+interface Option {
+  id: string;
+  name: string;
+}
+
 export function SingleSelect({
   options,
   getOptionKey = getOptionKeyStub,
+  onSelect,
+  selectedValue,
 }: {
-  options: React.ReactNode[];
+  options: Option[];
   getOptionKey?: (index: number) => string;
+  onSelect: (option: Option) => void;
+  selectedValue?: Option;
 }) {
   return (
     <View style={styles.root}>
-      {options.map((option, index) => (
-        <TextButton
-          key={getOptionKey(index)}
-          style={styles.option}
-          textStyle={styles.optionText}>
-          {option}
-        </TextButton>
-      ))}
+      {options.map((option, index) => {
+        const isSelected = selectedValue === option;
+
+        return (
+          <TextButton
+            onPress={() => onSelect(option)}
+            key={getOptionKey(index)}
+            style={{...styles.option, ...(isSelected ? {} : styles.unselected)}}
+            textStyle={isSelected ? undefined : styles.optionText}>
+            {option.name}
+          </TextButton>
+        );
+      })}
     </View>
   );
 }
