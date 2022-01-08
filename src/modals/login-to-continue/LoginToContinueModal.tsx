@@ -5,10 +5,11 @@ import {useNavigation} from '@react-navigation/native';
 import {Modal} from '../../components/modal/Modal';
 
 import AttentionIcon from '../../../assets/icons/Attention.svg';
-import {PrimaryButton} from '../../components/primary-button/PrimaryButton';
+
+import {useAuthenticationState} from '../../authentication/useAuthenticationState';
 
 import {styles} from './styles';
-import {useAuthenticationState} from '../../authentication/useAuthenticationState';
+import {ShadowedPrimaryButton} from '../../components/shadowed-primary-button/ShadowedPrimaryButton';
 
 export function LoginToContinueModal() {
   const navigation = useNavigation();
@@ -24,10 +25,12 @@ export function LoginToContinueModal() {
       headerText="Login To Continue"
       contentText={<>Please login to add product{'\n'}in your cart</>}
       icon={<AttentionIcon fill="#FEB96B" />}>
-      <PrimaryButton onPress={onLogin} style={styles.button}>
+      <ShadowedPrimaryButton
+        onPress={onLogin}
+        shadowContainerStyle={styles.button}>
         LOGIN
-      </PrimaryButton>
-      <PrimaryButton onPress={onLogin}>SIGN UP</PrimaryButton>
+      </ShadowedPrimaryButton>
+      <ShadowedPrimaryButton onPress={onLogin}>SIGN UP</ShadowedPrimaryButton>
     </Modal>
   );
 }

@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Modal} from '../../components/modal/Modal';
 
 import SuccessIcon from '../../../assets/icons/Success.svg';
-import {PrimaryButton} from '../../components/primary-button/PrimaryButton';
+import {ShadowedPrimaryButton} from '../../components/shadowed-primary-button/ShadowedPrimaryButton';
 
 export function ProductAddedModal() {
   const navigation = useNavigation();
@@ -18,7 +18,7 @@ export function ProductAddedModal() {
     <Modal
       headerText="Product added to your cart"
       icon={<SuccessIcon fill="#A5DC86" />}>
-      <PrimaryButton onPress={onConfirm}>OK</PrimaryButton>
+      <ShadowedPrimaryButton onPress={onConfirm}>OK</ShadowedPrimaryButton>
     </Modal>
   );
 }

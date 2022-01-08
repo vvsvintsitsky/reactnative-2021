@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Modal} from '../../components/modal/Modal';
 
 import ErrorIcon from '../../../assets/icons/Error.svg';
-import {PrimaryButton} from '../../components/primary-button/PrimaryButton';
+import {ShadowedPrimaryButton} from '../../components/shadowed-primary-button/ShadowedPrimaryButton';
 
 export function SelectColorModal() {
   const navigation = useNavigation();
@@ -21,7 +21,7 @@ export function SelectColorModal() {
         <>Please select your color to{'\n'}add this item in your cart</>
       }
       icon={<ErrorIcon fill="#DD6B55" />}>
-      <PrimaryButton onPress={onConfirm}>OK</PrimaryButton>
+      <ShadowedPrimaryButton onPress={onConfirm}>OK</ShadowedPrimaryButton>
     </Modal>
   );
 }
