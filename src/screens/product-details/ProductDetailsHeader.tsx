@@ -1,12 +1,10 @@
 import React from 'react';
 
-import {View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import ArrowLeftIcon from '../../../assets/icons/ArrowLeft.svg';
 import HeartIcon from '../../../assets/icons/Heart.svg';
 import CartIcon from '../../../assets/icons/Cart.svg';
-
-import {Header} from '../../components/header/Header';
 
 import {styles as iconStyles} from '../../components/icon/styles';
 
@@ -14,23 +12,25 @@ import {InteractiveContent} from '../../components/interactive-content/Interacti
 
 import {styles} from './styles';
 
-export function ProductDetailsHeader() {
+export function ProductDetailsHeaderLeft() {
+  const navigation = useNavigation();
+
   return (
-    <Header style={styles.header}>
+    <InteractiveContent onPress={navigation.goBack}>
+      <ArrowLeftIcon style={iconStyles.root} color={styles.headerIcon.color} />
+    </InteractiveContent>
+  );
+}
+
+export function ProductDetailsHeaderRight() {
+  return (
+    <>
       <InteractiveContent>
-        <ArrowLeftIcon
-          style={iconStyles.root}
-          color={styles.headerIcon.color}
-        />
+        <HeartIcon style={iconStyles.root} color={styles.headerIcon.color} />
       </InteractiveContent>
-      <View style={styles.headerControls}>
-        <InteractiveContent>
-          <HeartIcon style={iconStyles.root} color={styles.headerIcon.color} />
-        </InteractiveContent>
-        <InteractiveContent interactiveStyle={styles.cartButton}>
-          <CartIcon style={iconStyles.root} color={styles.headerIcon.color} />
-        </InteractiveContent>
-      </View>
-    </Header>
+      <InteractiveContent interactiveStyle={styles.cartButton}>
+        <CartIcon style={iconStyles.root} color={styles.headerIcon.color} />
+      </InteractiveContent>
+    </>
   );
 }

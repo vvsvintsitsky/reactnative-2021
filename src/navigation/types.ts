@@ -3,11 +3,11 @@ import {ID} from '../api/types';
 import {MainRoutes} from './MainRoutes';
 
 type RootStackParamList = {
-  Main: undefined;
-  ProductDetails: {productId: ID};
+  [MainRoutes.Main]: undefined;
+  [MainRoutes.ProductDetails]: {productId: ID};
 };
 
-export type RouteProps<T extends MainRoutes> = NativeStackScreenProps<
+export type StackRouteProps<T extends MainRoutes> = NativeStackScreenProps<
   RootStackParamList,
   T
 >;
