@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Animated, Easing} from 'react-native';
+import {Animated, Easing, EasingFunction} from 'react-native';
 
 import {convertRgbaColorToString} from '../../utils/color/convertRgbaColorToString';
 import {createRgbaColor} from '../../utils/color/createRgbaColor';
@@ -14,27 +14,36 @@ export function useBackgroundColorAnimation({
   duration = 2000,
   startColor,
   endColor,
-  onAnimationEnd,
+  easing = Easing.bounce,
 }: {
   startColor?: Partial<RgbaColor>;
   endColor?: Partial<RgbaColor>;
   duration?: number;
-  onAnimationEnd?: () => void;
+  easing?: EasingFunction;
 }) {
   const animationValueRef = React.useRef(
     new Animated.Value(ANIMATION_START_VALUE),
   );
 
-  const startAnimation = React.useCallback(() => {
-    animationValueRef.current.setValue(ANIMATION_START_VALUE);
+  const createAnimation = React.useCallback(
+    () =>
+      Animated.timing(animationValueRef.current, {
+        toValue: ANIMATION_END_VALUE,
+        easing,
+        duration,
+        useNativeDriver: false,
+      }),
+    [duration, easing],
+  );
 
-    Animated.timing(animationValueRef.current, {
-      toValue: ANIMATION_END_VALUE,
-      easing: Easing.bounce,
-      duration,
-      useNativeDriver: false,
-    }).start(onAnimationEnd);
-  }, [duration, onAnimationEnd]);
+  const startAnimation = React.useCallback(
+    (onAnimationEnd?: () => void) => {
+      animationValueRef.current.setValue(ANIMATION_START_VALUE);
+
+      createAnimation().start(onAnimationEnd);
+    },
+    [createAnimation],
+  );
 
   return {
     animationValueRef,
@@ -46,5 +55,6 @@ export function useBackgroundColorAnimation({
         convertRgbaColorToString(createRgbaColor(endColor)),
       ],
     }),
+    createAnimation,
   };
 }
