@@ -1,13 +1,15 @@
 import React from 'react';
-import {ViewStyle} from 'react-native';
 import {
   PrimaryButton,
   PrimaryButtonProps,
 } from '../primary-button/PrimaryButton';
-import {ShadowContainer} from '../shadow-container/ShadowContainer';
+import {
+  PrimaryButtonShadowContainer,
+  PrimaryButtonShadowContainerProps,
+} from './PrimaryButtonShadowContainer';
 
 export type ShadowedPrimaryButtonProps = PrimaryButtonProps & {
-  shadowContainerStyle?: ViewStyle;
+  shadowContainerStyle?: PrimaryButtonShadowContainerProps['style'];
 };
 
 export function ShadowedPrimaryButton({
@@ -15,13 +17,8 @@ export function ShadowedPrimaryButton({
   ...props
 }: ShadowedPrimaryButtonProps) {
   return (
-    <ShadowContainer
-      distance={4}
-      startColor="#0000004D"
-      sides={['bottom']}
-      corners={[]}
-      containerViewStyle={shadowContainerStyle}>
+    <PrimaryButtonShadowContainer style={shadowContainerStyle}>
       <PrimaryButton {...props} />
-    </ShadowContainer>
+    </PrimaryButtonShadowContainer>
   );
 }
