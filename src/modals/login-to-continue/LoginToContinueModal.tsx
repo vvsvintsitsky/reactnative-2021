@@ -1,46 +1,18 @@
 import React from 'react';
 
-import {useNavigation} from '@react-navigation/native';
-
 import {Modal} from '../../components/modal/Modal';
 
 import AttentionIcon from '../../../assets/icons/Attention.svg';
 
-import {useAuthenticationState} from '../../authentication/useAuthenticationState';
-
-import {
-  SmartButton,
-  SmartButtonStatus,
-} from '../../components/smart-button/SmartButton';
+import {SmartButton} from '../../components/smart-button/SmartButton';
 import {PrimaryButtonShadowContainer} from '../../components/shadowed-primary-button/PrimaryButtonShadowContainer';
 
 import {styles} from './styles';
+import {useLoginToContinueModal} from './useLoginToContinueModal';
 
 export function LoginToContinueModal() {
-  const navigation = useNavigation();
-  const {onAuthenticate} = useAuthenticationState();
-
-  const [loginStatus, setLoginStatus] = React.useState<SmartButtonStatus>();
-
-  const onLogin = React.useCallback(async () => {
-    try {
-      await onAuthenticate(true);
-    } catch (e) {
-      return setLoginStatus(SmartButtonStatus.ERROR);
-    }
-
-    setLoginStatus(SmartButtonStatus.SUCCESS);
-  }, [onAuthenticate]);
-
-  const onLoginSuccess = React.useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
-
-  const [signUpStatus, setSignUpStatus] = React.useState<SmartButtonStatus>();
-
-  const onSignUp = React.useCallback(() => {
-    setSignUpStatus(SmartButtonStatus.ERROR);
-  }, []);
+  const {loginStatus, onLogin, onLoginSuccess, signUpStatus, onSignUp} =
+    useLoginToContinueModal();
 
   return (
     <Modal
