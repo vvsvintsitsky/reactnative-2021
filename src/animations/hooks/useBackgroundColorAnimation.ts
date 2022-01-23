@@ -1,14 +1,10 @@
-import React from 'react';
-
-import {Animated, Easing, EasingFunction} from 'react-native';
+import {Easing, EasingFunction} from 'react-native';
 
 import {convertRgbaColorToString} from '../../utils/color/convertRgbaColorToString';
 import {createRgbaColor} from '../../utils/color/createRgbaColor';
 import {RgbaColor} from '../../utils/color/types';
-
-export const ANIMATION_START_VALUE = 0;
-
-export const ANIMATION_END_VALUE = 1;
+import {ANIMATION_START_VALUE, ANIMATION_END_VALUE} from './constants';
+import {useAnimation} from './useAnimation';
 
 export function useBackgroundColorAnimation({
   duration = 2000,
@@ -21,40 +17,16 @@ export function useBackgroundColorAnimation({
   duration?: number;
   easing?: EasingFunction;
 }) {
-  const animationValueRef = React.useRef(
-    new Animated.Value(ANIMATION_START_VALUE),
-  );
-
-  const createAnimation = React.useCallback(
-    () =>
-      Animated.timing(animationValueRef.current, {
-        toValue: ANIMATION_END_VALUE,
-        easing,
-        duration,
-        useNativeDriver: false,
-      }),
-    [duration, easing],
-  );
-
-  const startAnimation = React.useCallback(
-    (onAnimationEnd?: () => void) => {
-      animationValueRef.current.setValue(ANIMATION_START_VALUE);
-
-      createAnimation().start(onAnimationEnd);
-    },
-    [createAnimation],
-  );
+  const animationOptions = useAnimation({duration, easing});
 
   return {
-    animationValueRef,
-    startAnimation,
-    interpolatedValue: animationValueRef.current.interpolate({
+    ...animationOptions,
+    interpolatedValue: animationOptions.animationValueRef.current.interpolate({
       inputRange: [ANIMATION_START_VALUE, ANIMATION_END_VALUE],
       outputRange: [
         convertRgbaColorToString(createRgbaColor(startColor)),
         convertRgbaColorToString(createRgbaColor(endColor)),
       ],
     }),
-    createAnimation,
   };
 }

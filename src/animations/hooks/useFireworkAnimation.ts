@@ -3,11 +3,8 @@ import React from 'react';
 import {Easing} from 'react-native';
 import {createRgbaColor} from '../../utils/color/createRgbaColor';
 import {RgbaColor} from '../../utils/color/types';
-import {
-  ANIMATION_END_VALUE,
-  ANIMATION_START_VALUE,
-  useBackgroundColorAnimation,
-} from '../hooks/useBackgroundColorAnimation';
+import {useBackgroundColorAnimation} from '../hooks/useBackgroundColorAnimation';
+import {ANIMATION_START_VALUE, ANIMATION_END_VALUE} from './constants';
 
 const SPARKS_QUANTITY = 10;
 
@@ -64,8 +61,12 @@ export function useFireworkAnimation({
           {
             translateY: interpolateValue(Math.cos),
           },
+          {
+            scale: interpolatedScale,
+          },
         ];
       }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [sparksQuantity, exposionRadius, animationValueRef],
   );
 

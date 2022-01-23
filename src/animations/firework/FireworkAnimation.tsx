@@ -21,7 +21,6 @@ export function FireworkAnimation({
 }) {
   const {
     startAnimation,
-    scale,
     transforms,
     color: fireworkColor,
   } = useFireworkAnimation({
@@ -53,7 +52,7 @@ export function FireworkAnimation({
           style={{
             ...styles.spark,
             backgroundColor: fireworkColor,
-            transform: [...interpolatedTransform, {scale}],
+            transform: [...interpolatedTransform],
           }}
         />
       ))}

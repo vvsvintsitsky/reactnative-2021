@@ -2,10 +2,7 @@ import React from 'react';
 
 import {Animated} from 'react-native';
 
-import {
-  ANIMATION_START_VALUE,
-  useBackgroundColorAnimation,
-} from '../../animations/hooks/useBackgroundColorAnimation';
+import {useBackgroundColorAnimation} from '../../animations/hooks/useBackgroundColorAnimation';
 
 import {
   PrimaryButton,
@@ -36,6 +33,7 @@ export function SmartButton({
     interpolatedValue: successInterpolatedValue,
     animationValueRef: successAnimationValueRef,
     startAnimation: startSuccessAnimation,
+    resetAnimation: resetSuccessAnimation,
   } = useBackgroundColorAnimation({
     startColor: INITIAL_COLOR,
     endColor: SUCCESS_COLOR,
@@ -45,14 +43,15 @@ export function SmartButton({
     interpolatedValue: errorInterpolatedValue,
     animationValueRef: errorAnimationValueRef,
     startAnimation: startErrorAnimation,
+    resetAnimation: resetErrorAnimation,
   } = useBackgroundColorAnimation({
     startColor: INITIAL_COLOR,
     endColor: ERROR_COLOR,
   });
 
   React.useEffect(() => {
-    errorAnimationValueRef.current.setValue(ANIMATION_START_VALUE);
-    successAnimationValueRef.current.setValue(ANIMATION_START_VALUE);
+    resetErrorAnimation();
+    resetSuccessAnimation();
 
     if (status === SmartButtonStatus.INITIAL) {
       return;
@@ -75,6 +74,8 @@ export function SmartButton({
     startErrorAnimation,
     onSuccess,
     onError,
+    resetErrorAnimation,
+    resetSuccessAnimation,
   ]);
 
   return (
