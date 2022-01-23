@@ -20,27 +20,21 @@ export function useInputPlaceholderAnimation({
   endScale?: number;
   inputRef: React.RefObject<TextInput>;
 }) {
-  const {
-    startAnimation: startFocusAnimation,
-    transform: focusedTransform,
-    resetAnimation: resetFocusAnimation,
-  } = useTranslateXYAnimation({
-    startScale,
-    endScale,
-    start,
-    end,
-  });
+  const {startAnimation: startFocusAnimation, transform: focusedTransform} =
+    useTranslateXYAnimation({
+      startScale,
+      endScale,
+      start,
+      end,
+    });
 
-  const {
-    startAnimation: startBlurAnimation,
-    transform: bluredTransform,
-    resetAnimation: resetBlurAnimation,
-  } = useTranslateXYAnimation({
-    startScale: endScale,
-    endScale: startScale,
-    start: end,
-    end: start,
-  });
+  const {startAnimation: startBlurAnimation, transform: bluredTransform} =
+    useTranslateXYAnimation({
+      startScale: endScale,
+      endScale: startScale,
+      start: end,
+      end: start,
+    });
 
   React.useLayoutEffect(() => {
     if (inputRef.current?.isFocused() || value) {
@@ -49,19 +43,9 @@ export function useInputPlaceholderAnimation({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onFocus = React.useCallback(() => {
-    resetBlurAnimation();
-    startFocusAnimation();
-  }, [startFocusAnimation, resetBlurAnimation]);
-
-  const onBlur = React.useCallback(() => {
-    resetFocusAnimation();
-    startBlurAnimation();
-  }, [startBlurAnimation, resetFocusAnimation]);
-
   return {
-    onFocus,
-    onBlur,
+    onFocus: startFocusAnimation,
+    onBlur: startBlurAnimation,
     transforms: isFocused || value ? focusedTransform : bluredTransform,
   };
 }

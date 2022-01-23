@@ -11,9 +11,11 @@ import {createPoint} from '../../utils/coodrinates/createPoint';
 
 import {height, paddingHorizontal, styles} from './styles';
 
-const PLACEHOLDER_TRANSLATION_START = createPoint({x: paddingHorizontal});
+const PLACEHOLDER_OFFSET_X = paddingHorizontal * 2;
+
+const PLACEHOLDER_TRANSLATION_START = createPoint({x: PLACEHOLDER_OFFSET_X});
 const PLACEHOLDER_TRANSLATION_END = createPoint({
-  x: paddingHorizontal,
+  x: PLACEHOLDER_OFFSET_X,
   y: -height / 2,
 });
 
@@ -38,7 +40,7 @@ export function TextInput({
     value,
     inputRef,
     isFocused,
-    endScale: 0.3,
+    endScale: 0.9,
   });
   const onFocus: React.EventHandler<
     NativeSyntheticEvent<TextInputFocusEventData>

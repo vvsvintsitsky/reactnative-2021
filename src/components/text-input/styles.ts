@@ -17,5 +17,6 @@ export const styles = StyleSheet.create({
   },
   placeholder: {
     position: 'absolute',
+    backgroundColor: '#ffffff',
   },
 });
