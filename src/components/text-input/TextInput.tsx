@@ -57,14 +57,13 @@ export function TextInput({
     NativeSyntheticEvent<TextInputFocusEventData>
   > = React.useCallback(
     e => {
-      setIsFocused(() => false);
-      startBlurAnimation();
+      startBlurAnimation(() => setIsFocused(() => false));
       onInputBlur?.(e);
     },
     [onInputBlur, startBlurAnimation],
   );
 
-  const isPlaceholderShifted = placeholder && (isFocused || value);
+  const isPlaceholderShifted = !!placeholder && (isFocused || !!value);
 
   return (
     <>
