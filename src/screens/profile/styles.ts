@@ -1,0 +1,35 @@
+import {StyleSheet} from 'react-native';
+
+import {BACKGROUND_COLOR} from '../../components/text-button/styles';
+import {convertRgbaColorToString} from '../../utils/color/convertRgbaColorToString';
+
+const PHOTO_BUTTON_SIZE = 120;
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  root: {
+    marginHorizontal: 20,
+  },
+  input: {
+    marginTop: 25,
+  },
+  photoButton: {
+    alignSelf: 'center',
+    backgroundColor: convertRgbaColorToString(BACKGROUND_COLOR),
+    borderRadius: PHOTO_BUTTON_SIZE / 2,
+    width: PHOTO_BUTTON_SIZE,
+    height: PHOTO_BUTTON_SIZE,
+  },
+  photoIcon: {
+    width: 50,
+    height: 45,
+  },
+  formInputs: {
+    marginBottom: 30,
+  },
+  button: {
+    marginTop: 20,
+  },
+});

@@ -5,4 +5,7 @@ export const styles = StyleSheet.create({
     width: 125,
     height: 40,
   },
+  fullWidth: {
+    width: '100%',
+  },
 });

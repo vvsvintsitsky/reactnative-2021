@@ -39,6 +39,9 @@ import {AuthenticationContext} from './src/authentication/AuthenticationContext'
 import {SelectColorModal} from './src/modals/select-color/SelectColorModal';
 import {ProductAddedModal} from './src/modals/product-added/ProductAddedModal';
 import {ShareButton} from './src/share/ShareButton';
+import {ProfileScreen} from './src/screens/profile/ProfileScreen';
+import ProfileIcon from './assets/icons/Profile.svg';
+import {styles as iconStyles} from './src/components/icon/styles';
 
 const Drawer = createDrawerNavigator();
 const MainRoutesStack = createStackNavigator();
@@ -125,11 +128,27 @@ const App = () => {
         <NavigationContainer>
           <Drawer.Navigator
             initialRouteName={DrawerRoutes.Main}
-            screenOptions={{headerShown: false}}
+            screenOptions={{
+              headerShown: false,
+              headerStyle: headerOptions.headerStyle,
+              headerTintColor: headerOptions.headerTintColor,
+              headerTitleStyle: headerOptions.headerTitleStyle,
+              headerTitleAlign: headerOptions.headerTitleAlign,
+            }}
             drawerContent={DrawerContent}>
             <Drawer.Screen
               name={DrawerRoutes.Main}
               component={MainNavigationStack}
+            />
+            <Drawer.Screen
+              name={DrawerRoutes.Profile}
+              component={ProfileScreen}
+              options={{
+                headerShown: true,
+                drawerIcon: () => <ProfileIcon style={iconStyles.root} />,
+                headerLeft: () => <ProductDetailsHeaderLeft />,
+                headerRight: () => <MainHeaderRight />,
+              }}
             />
             <Drawer.Screen name={DrawerRoutes.Trash} component={TrashScreen} />
           </Drawer.Navigator>
