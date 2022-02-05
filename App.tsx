@@ -7,7 +7,12 @@ import {
   createStackNavigator,
   StackNavigationOptions,
 } from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from '@react-navigation/drawer';
 
 import {ApiClient} from './src/api/client/ApiClient';
 import {ApiClientContext} from './src/api/client/ApiClientContext';
@@ -33,6 +38,7 @@ import {useAuthentication} from './src/authentication/useAuthentication';
 import {AuthenticationContext} from './src/authentication/AuthenticationContext';
 import {SelectColorModal} from './src/modals/select-color/SelectColorModal';
 import {ProductAddedModal} from './src/modals/product-added/ProductAddedModal';
+import {ShareButton} from './src/share/ShareButton';
 
 const Drawer = createDrawerNavigator();
 const MainRoutesStack = createStackNavigator();
@@ -99,6 +105,15 @@ function MainNavigationStack() {
   );
 }
 
+function DrawerContent(props: DrawerContentComponentProps) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <ShareButton />
+    </DrawerContentScrollView>
+  );
+}
+
 const App = () => {
   const [apiClient] = React.useState(() => new ApiClient(API_BASE));
 
@@ -110,7 +125,8 @@ const App = () => {
         <NavigationContainer>
           <Drawer.Navigator
             initialRouteName={DrawerRoutes.Main}
-            screenOptions={{headerShown: false}}>
+            screenOptions={{headerShown: false}}
+            drawerContent={DrawerContent}>
             <Drawer.Screen
               name={DrawerRoutes.Main}
               component={MainNavigationStack}
