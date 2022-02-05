@@ -34,8 +34,6 @@ import {DrawerRoutes} from './src/navigation/DrawerRoutes';
 import {TrashScreen} from './src/screens/trash/TrashScreen';
 import {Modals} from './src/navigation/Modals';
 import {LoginToContinueModal} from './src/modals/login-to-continue/LoginToContinueModal';
-import {useAuthentication} from './src/authentication/useAuthentication';
-import {AuthenticationContext} from './src/authentication/AuthenticationContext';
 import {SelectColorModal} from './src/modals/select-color/SelectColorModal';
 import {ProductAddedModal} from './src/modals/product-added/ProductAddedModal';
 import {ShareButton} from './src/share/ShareButton';
@@ -44,6 +42,8 @@ import ProfileIcon from './assets/icons/Profile.svg';
 import {styles as iconStyles} from './src/components/icon/styles';
 import {StorageProvider} from './src/storage/StorageProvider';
 import {STORAGE_KEY} from './config';
+import {AuthenticationProvider} from './src/authentication/AuthenticationProvider';
+import {useAuthenticationState} from './src/authentication/useAuthenticationState';
 
 const Drawer = createDrawerNavigator();
 const MainRoutesStack = createStackNavigator();
@@ -119,48 +119,49 @@ function DrawerContent(props: DrawerContentComponentProps) {
   );
 }
 
+function DrawerNavigator() {
+  const {user} = useAuthenticationState();
+
+  return (
+    <Drawer.Navigator
+      initialRouteName={DrawerRoutes.Main}
+      screenOptions={{
+        headerShown: false,
+        headerStyle: headerOptions.headerStyle,
+        headerTintColor: headerOptions.headerTintColor,
+        headerTitleStyle: headerOptions.headerTitleStyle,
+        headerTitleAlign: headerOptions.headerTitleAlign,
+      }}
+      drawerContent={DrawerContent}>
+      <Drawer.Screen name={DrawerRoutes.Main} component={MainNavigationStack} />
+      {!!user && (
+        <Drawer.Screen
+          name={DrawerRoutes.Profile}
+          options={{
+            headerShown: true,
+            drawerIcon: () => <ProfileIcon style={iconStyles.root} />,
+            headerLeft: () => <ProductDetailsHeaderLeft />,
+            headerRight: () => <MainHeaderRight />,
+          }}>
+          {() => <ProfileScreen user={user} />}
+        </Drawer.Screen>
+      )}
+      <Drawer.Screen name={DrawerRoutes.Trash} component={TrashScreen} />
+    </Drawer.Navigator>
+  );
+}
+
 const App = () => {
   const [apiClient] = React.useState(() => new ApiClient(API_BASE));
-
-  const {authentication, onAuthenticate} = useAuthentication();
 
   return (
     <StorageProvider storageKey={STORAGE_KEY}>
       <ApiClientContext.Provider value={apiClient}>
-        <AuthenticationContext.Provider
-          value={{authentication, onAuthenticate}}>
+        <AuthenticationProvider>
           <NavigationContainer>
-            <Drawer.Navigator
-              initialRouteName={DrawerRoutes.Main}
-              screenOptions={{
-                headerShown: false,
-                headerStyle: headerOptions.headerStyle,
-                headerTintColor: headerOptions.headerTintColor,
-                headerTitleStyle: headerOptions.headerTitleStyle,
-                headerTitleAlign: headerOptions.headerTitleAlign,
-              }}
-              drawerContent={DrawerContent}>
-              <Drawer.Screen
-                name={DrawerRoutes.Main}
-                component={MainNavigationStack}
-              />
-              <Drawer.Screen
-                name={DrawerRoutes.Profile}
-                component={ProfileScreen}
-                options={{
-                  headerShown: true,
-                  drawerIcon: () => <ProfileIcon style={iconStyles.root} />,
-                  headerLeft: () => <ProductDetailsHeaderLeft />,
-                  headerRight: () => <MainHeaderRight />,
-                }}
-              />
-              <Drawer.Screen
-                name={DrawerRoutes.Trash}
-                component={TrashScreen}
-              />
-            </Drawer.Navigator>
+            <DrawerNavigator />
           </NavigationContainer>
-        </AuthenticationContext.Provider>
+        </AuthenticationProvider>
       </ApiClientContext.Provider>
     </StorageProvider>
   );

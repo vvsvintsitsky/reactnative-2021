@@ -1,8 +1,19 @@
 import React from 'react';
 import {ID, UserProfile} from '../api/types';
+import {AsyncStorage} from '../storage/types';
 import {useStorage} from '../storage/useStorage';
 
 const USER_PROFILE_STORAGE_KEY = 'user-profile';
+
+async function getUsersFromStorage(storage: AsyncStorage) {
+  const users = await storage.getItem<UserProfile[]>(USER_PROFILE_STORAGE_KEY);
+  return users ?? [];
+}
+
+export async function getUserFromStorage(storage: AsyncStorage, id: ID) {
+  const users = await getUsersFromStorage(storage);
+  return users.find(user => user.id === id);
+}
 
 export function useUserProfile(id: ID) {
   const storage = useStorage();
@@ -10,17 +21,15 @@ export function useUserProfile(id: ID) {
   const [userProfile, setUserProfile] = React.useState<UserProfile>();
   const [isLoadingUserProfile, setIsLoadingUserProfile] = React.useState(true);
 
-  const getUsers = React.useCallback(async () => {
-    const users = await storage.getItem<UserProfile[]>(
-      USER_PROFILE_STORAGE_KEY,
-    );
-    return users ?? [];
-  }, [storage]);
+  const getUsers = React.useCallback(
+    () => getUsersFromStorage(storage),
+    [storage],
+  );
 
-  const getUser = React.useCallback(async () => {
-    const users = await getUsers();
-    return users.find(user => user.id === id);
-  }, [getUsers, id]);
+  const getUser = React.useCallback(
+    async () => getUserFromStorage(storage, id),
+    [storage, id],
+  );
 
   const updateUsers = React.useCallback(
     async (updater: (users: UserProfile[]) => UserProfile[]) => {
@@ -68,7 +77,7 @@ export function useUserProfile(id: ID) {
 
   React.useEffect(() => {
     loadUser();
-  }, [loadUser]);
+  }, [loadUser, id]);
 
   return {
     userProfile,
