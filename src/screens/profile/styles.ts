@@ -8,9 +8,10 @@ const PHOTO_BUTTON_SIZE = 120;
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#ffffff',
   },
   root: {
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
   },
   input: {
     marginTop: 25,

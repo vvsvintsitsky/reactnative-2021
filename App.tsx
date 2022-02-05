@@ -42,6 +42,8 @@ import {ShareButton} from './src/share/ShareButton';
 import {ProfileScreen} from './src/screens/profile/ProfileScreen';
 import ProfileIcon from './assets/icons/Profile.svg';
 import {styles as iconStyles} from './src/components/icon/styles';
+import {StorageProvider} from './src/storage/StorageProvider';
+import {STORAGE_KEY} from './config';
 
 const Drawer = createDrawerNavigator();
 const MainRoutesStack = createStackNavigator();
@@ -123,38 +125,44 @@ const App = () => {
   const {authentication, onAuthenticate} = useAuthentication();
 
   return (
-    <ApiClientContext.Provider value={apiClient}>
-      <AuthenticationContext.Provider value={{authentication, onAuthenticate}}>
-        <NavigationContainer>
-          <Drawer.Navigator
-            initialRouteName={DrawerRoutes.Main}
-            screenOptions={{
-              headerShown: false,
-              headerStyle: headerOptions.headerStyle,
-              headerTintColor: headerOptions.headerTintColor,
-              headerTitleStyle: headerOptions.headerTitleStyle,
-              headerTitleAlign: headerOptions.headerTitleAlign,
-            }}
-            drawerContent={DrawerContent}>
-            <Drawer.Screen
-              name={DrawerRoutes.Main}
-              component={MainNavigationStack}
-            />
-            <Drawer.Screen
-              name={DrawerRoutes.Profile}
-              component={ProfileScreen}
-              options={{
-                headerShown: true,
-                drawerIcon: () => <ProfileIcon style={iconStyles.root} />,
-                headerLeft: () => <ProductDetailsHeaderLeft />,
-                headerRight: () => <MainHeaderRight />,
+    <StorageProvider storageKey={STORAGE_KEY}>
+      <ApiClientContext.Provider value={apiClient}>
+        <AuthenticationContext.Provider
+          value={{authentication, onAuthenticate}}>
+          <NavigationContainer>
+            <Drawer.Navigator
+              initialRouteName={DrawerRoutes.Main}
+              screenOptions={{
+                headerShown: false,
+                headerStyle: headerOptions.headerStyle,
+                headerTintColor: headerOptions.headerTintColor,
+                headerTitleStyle: headerOptions.headerTitleStyle,
+                headerTitleAlign: headerOptions.headerTitleAlign,
               }}
-            />
-            <Drawer.Screen name={DrawerRoutes.Trash} component={TrashScreen} />
-          </Drawer.Navigator>
-        </NavigationContainer>
-      </AuthenticationContext.Provider>
-    </ApiClientContext.Provider>
+              drawerContent={DrawerContent}>
+              <Drawer.Screen
+                name={DrawerRoutes.Main}
+                component={MainNavigationStack}
+              />
+              <Drawer.Screen
+                name={DrawerRoutes.Profile}
+                component={ProfileScreen}
+                options={{
+                  headerShown: true,
+                  drawerIcon: () => <ProfileIcon style={iconStyles.root} />,
+                  headerLeft: () => <ProductDetailsHeaderLeft />,
+                  headerRight: () => <MainHeaderRight />,
+                }}
+              />
+              <Drawer.Screen
+                name={DrawerRoutes.Trash}
+                component={TrashScreen}
+              />
+            </Drawer.Navigator>
+          </NavigationContainer>
+        </AuthenticationContext.Provider>
+      </ApiClientContext.Provider>
+    </StorageProvider>
   );
 };
 

@@ -1,34 +1,55 @@
 import React from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
+import {SafeAreaView, ScrollView, Text} from 'react-native';
 
-import {UserProfile} from '../../api/types';
+import {ID, UserProfile} from '../../api/types';
+import {useUserProfile} from '../../user-profile/useUserProfile';
 import {shallowEqual} from '../../utils/shallowEqual';
 
 import {ProfileForm, ProfileFormProps} from './ProfileForm';
 import {styles} from './styles';
 
-const userProfile: UserProfile = {
-  id: '',
-  city: '',
-  flatNumber: '',
-  locality: '',
-  name: '',
-  phoneNumber: '',
-  imageUrl: '',
-};
+function createEmptyUser(id: ID = ''): UserProfile {
+  return {
+    id,
+    city: '',
+    flatNumber: '',
+    locality: '',
+    name: '',
+    phoneNumber: '',
+    imageUrl: '',
+  };
+}
 
-export function ProfileScreen() {
-  const onLogout = React.useCallback(() => undefined, []);
-  const onUpdate = React.useCallback(() => undefined, []);
+const EMPTY_USER = createEmptyUser();
 
-  const [profileToEdit, setProfileToEdit] = React.useState(userProfile);
+export function ProfileScreen({id = 'stub_id'}: {id?: ID}) {
+  const [profileToEdit, setProfileToEdit] = React.useState(() =>
+    createEmptyUser(id),
+  );
+
+  const {saveUser, deleteUser, isLoadingUserProfile, userProfile} =
+    useUserProfile(id);
+
+  React.useEffect(() => {
+    if (userProfile) {
+      setProfileToEdit(userProfile);
+    }
+  }, [userProfile]);
+
+  const onUpdate = React.useCallback(
+    () => saveUser(profileToEdit),
+    [profileToEdit, saveUser],
+  );
 
   const createChangeListener: ProfileFormProps['createChangeListener'] =
     React.useCallback((key: keyof UserProfile) => {
       return function onChangeListener(e) {
+        const {
+          nativeEvent: {text},
+        } = e;
         setProfileToEdit(prevProfile => ({
           ...prevProfile,
-          [key]: e.nativeEvent.text,
+          [key]: text,
         }));
       };
     }, []);
@@ -38,15 +59,21 @@ export function ProfileScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.root}>
-        <ProfileForm
-          userProfile={profileToEdit}
-          onLogout={onLogout}
-          onUpdate={
-            !shallowEqual(userProfile, profileToEdit) ? onUpdate : undefined
-          }
-          createChangeListener={createChangeListener}
-          onPhotoPress={onPhotoPress}
-        />
+        {isLoadingUserProfile ? (
+          <Text>Loading</Text>
+        ) : (
+          <ProfileForm
+            userProfile={profileToEdit}
+            onLogout={deleteUser}
+            onUpdate={
+              !shallowEqual(userProfile ?? EMPTY_USER, profileToEdit)
+                ? onUpdate
+                : undefined
+            }
+            createChangeListener={createChangeListener}
+            onPhotoPress={onPhotoPress}
+          />
+        )}
       </ScrollView>
     </SafeAreaView>
   );

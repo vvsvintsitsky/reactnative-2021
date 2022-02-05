@@ -42,6 +42,7 @@ export function ProfileForm({
           value={name}
           onChange={createChangeListener('name')}
           style={styles.input}
+          defaultValue={name}
         />
 
         <IconButton
@@ -57,24 +58,28 @@ export function ProfileForm({
           value={phoneNumber}
           onChange={createChangeListener('phoneNumber')}
           style={styles.input}
+          defaultValue={phoneNumber}
         />
         <TextInput
           placeholder="City"
           value={city}
           onChange={createChangeListener('city')}
           style={styles.input}
+          defaultValue={city}
         />
         <TextInput
           placeholder="Locality, area of street"
           value={locality}
           onChange={createChangeListener('locality')}
           style={styles.input}
+          defaultValue={locality}
         />
         <TextInput
           placeholder="Flat no., Building name"
           value={flatNumber}
           onChange={createChangeListener('flatNumber')}
           style={styles.input}
+          defaultValue={flatNumber}
         />
       </View>
 
