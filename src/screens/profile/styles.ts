@@ -16,12 +16,14 @@ export const styles = StyleSheet.create({
   input: {
     marginTop: 25,
   },
-  photoButton: {
+  photo: {
     alignSelf: 'center',
-    backgroundColor: convertRgbaColorToString(BACKGROUND_COLOR),
     borderRadius: PHOTO_BUTTON_SIZE / 2,
     width: PHOTO_BUTTON_SIZE,
     height: PHOTO_BUTTON_SIZE,
+  },
+  photoButton: {
+    backgroundColor: convertRgbaColorToString(BACKGROUND_COLOR),
   },
   photoIcon: {
     width: 50,

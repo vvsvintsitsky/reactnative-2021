@@ -3,6 +3,7 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
   View,
+  Image,
 } from 'react-native';
 
 import {UserProfile} from '../../api/types';
@@ -14,6 +15,7 @@ import {IconButton} from '../../components/icon-button/IconButton';
 import PhotoIcon from '../../../assets/icons/Photo.svg';
 
 import {styles} from './styles';
+import {InteractiveContent} from '../../components/interactive-content/InteractiveContent';
 
 export interface ProfileFormProps {
   userProfile: UserProfile;
@@ -32,7 +34,7 @@ export function ProfileForm({
   createChangeListener,
   onPhotoPress,
 }: ProfileFormProps) {
-  const {name, phoneNumber, city, locality, flatNumber} = userProfile;
+  const {name, phoneNumber, city, locality, flatNumber, imageUrl} = userProfile;
 
   return (
     <View>
@@ -45,13 +47,21 @@ export function ProfileForm({
           defaultValue={name}
         />
 
-        <IconButton
-          icon={PhotoIcon}
-          style={[styles.photoButton, styles.input]}
-          iconStyle={styles.photoIcon}
-          viewBox="0 0 50 46"
-          onPress={onPhotoPress}
-        />
+        {imageUrl ? (
+          <InteractiveContent
+            onPress={onPhotoPress}
+            style={[styles.photo, styles.input]}>
+            <Image style={styles.photo} source={{uri: imageUrl}} />
+          </InteractiveContent>
+        ) : (
+          <IconButton
+            icon={PhotoIcon}
+            style={[styles.photoButton, styles.photo, styles.input]}
+            iconStyle={styles.photoIcon}
+            viewBox="0 0 50 46"
+            onPress={onPhotoPress}
+          />
+        )}
 
         <TextInput
           placeholder="Mobile Number"

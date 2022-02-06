@@ -1,6 +1,10 @@
-import {DrawerScreenProps} from '@react-navigation/drawer';
 import React from 'react';
 import {SafeAreaView, ScrollView, Text} from 'react-native';
+import {DrawerScreenProps} from '@react-navigation/drawer';
+import {
+  ImageLibraryOptions,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 
 import {UserProfile} from '../../api/types';
 import {DrawerRoutes} from '../../navigation/DrawerRoutes';
@@ -9,6 +13,12 @@ import {shallowEqual} from '../../utils/shallowEqual';
 
 import {ProfileForm, ProfileFormProps} from './ProfileForm';
 import {styles} from './styles';
+
+const IMAGE_PICKER_OPTIONS: ImageLibraryOptions = {
+  selectionLimit: 1,
+  mediaType: 'photo',
+  includeBase64: true,
+};
 
 export function ProfileScreen({
   user,
@@ -52,7 +62,24 @@ export function ProfileScreen({
       };
     }, []);
 
-  const onPhotoPress = React.useCallback(() => undefined, []);
+  const onPhotoPress = React.useCallback(async () => {
+    const {didCancel, errorCode, assets} = await launchImageLibrary(
+      IMAGE_PICKER_OPTIONS,
+    );
+    if (didCancel || errorCode || !assets) {
+      return;
+    }
+
+    const imageData = assets[0]?.base64;
+    if (!imageData) {
+      return;
+    }
+
+    setProfileToEdit(prevProfile => ({
+      ...prevProfile,
+      imageUrl: `data:image/jpeg;base64,${imageData}`,
+    }));
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>

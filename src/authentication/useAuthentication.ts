@@ -2,7 +2,10 @@ import React from 'react';
 import {ID, UserProfile} from '../api/types';
 import {useStorage} from '../storage/useStorage';
 import {createEmptyUser} from '../user-profile/createEmptyUser';
-import {getUserFromStorage} from '../user-profile/useUserProfile';
+import {
+  getUserFromStorage,
+  useUserProfile,
+} from '../user-profile/useUserProfile';
 import {AuthenticationState} from './types';
 
 const STUB_USER_ID = 'stub_user_id';
@@ -36,11 +39,14 @@ export function useAuthentication(): AuthenticationState {
     })();
   }, [storage, onLogout]);
 
+  const {saveUser} = useUserProfile(STUB_USER_ID);
+
   const onAuthenticate = React.useCallback(async () => {
     const emptyUser = createEmptyUser(STUB_USER_ID);
-    await storage.setItem(AUTHENTICATION_STORAGE_KEY, emptyUser);
+    await saveUser(emptyUser);
+    await storage.setItem(AUTHENTICATION_STORAGE_KEY, STUB_USER_ID);
     setUser(emptyUser);
-  }, [storage]);
+  }, [storage, saveUser]);
 
   return {user, onAuthenticate, onLogout};
 }
