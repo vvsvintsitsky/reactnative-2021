@@ -1,18 +1,28 @@
+import {DrawerScreenProps} from '@react-navigation/drawer';
 import React from 'react';
 import {SafeAreaView, ScrollView, Text} from 'react-native';
 
 import {UserProfile} from '../../api/types';
+import {DrawerRoutes} from '../../navigation/DrawerRoutes';
 import {useUserProfile} from '../../user-profile/useUserProfile';
 import {shallowEqual} from '../../utils/shallowEqual';
 
 import {ProfileForm, ProfileFormProps} from './ProfileForm';
 import {styles} from './styles';
 
-export function ProfileScreen({user}: {user: UserProfile}) {
+export function ProfileScreen({
+  user,
+  navigation,
+}: {
+  user: UserProfile;
+  navigation: DrawerScreenProps<
+    {[DrawerRoutes.ConfirmLogout]: {}},
+    DrawerRoutes.ConfirmLogout
+  >['navigation'];
+}) {
   const [profileToEdit, setProfileToEdit] = React.useState(user);
 
-  const {saveUser, deleteUser, isLoadingUserProfile, userProfile} =
-    useUserProfile(user.id);
+  const {saveUser, isLoadingUserProfile, userProfile} = useUserProfile(user.id);
 
   React.useEffect(() => {
     if (userProfile) {
@@ -24,6 +34,10 @@ export function ProfileScreen({user}: {user: UserProfile}) {
     () => saveUser(profileToEdit),
     [profileToEdit, saveUser],
   );
+
+  const onLogout = React.useCallback(() => {
+    navigation.navigate(DrawerRoutes.ConfirmLogout, {});
+  }, [navigation]);
 
   const createChangeListener: ProfileFormProps['createChangeListener'] =
     React.useCallback((key: keyof UserProfile) => {
@@ -48,7 +62,7 @@ export function ProfileScreen({user}: {user: UserProfile}) {
         ) : (
           <ProfileForm
             userProfile={profileToEdit}
-            onLogout={deleteUser}
+            onLogout={onLogout}
             onUpdate={
               !shallowEqual(userProfile, profileToEdit) ? onUpdate : undefined
             }

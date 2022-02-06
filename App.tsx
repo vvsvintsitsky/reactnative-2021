@@ -44,6 +44,9 @@ import {StorageProvider} from './src/storage/StorageProvider';
 import {STORAGE_KEY} from './config';
 import {AuthenticationProvider} from './src/authentication/AuthenticationProvider';
 import {useAuthenticationState} from './src/authentication/useAuthenticationState';
+import {ConfirmLogoutModal} from './src/modals/confirm-logout/ConfirmLogoutModal';
+
+const RootStack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
 const MainRoutesStack = createStackNavigator();
@@ -143,7 +146,9 @@ function DrawerNavigator() {
             headerLeft: () => <ProductDetailsHeaderLeft />,
             headerRight: () => <MainHeaderRight />,
           }}>
-          {() => <ProfileScreen user={user} />}
+          {({navigation}) => (
+            <ProfileScreen user={user} navigation={navigation} />
+          )}
         </Drawer.Screen>
       )}
       <Drawer.Screen name={DrawerRoutes.Trash} component={TrashScreen} />
@@ -159,7 +164,17 @@ const App = () => {
       <ApiClientContext.Provider value={apiClient}>
         <AuthenticationProvider>
           <NavigationContainer>
-            <DrawerNavigator />
+            <RootStack.Navigator screenOptions={{headerShown: false}}>
+              <RootStack.Group>
+                <RootStack.Screen name="Root" component={DrawerNavigator} />
+              </RootStack.Group>
+              <RootStack.Group>
+                <RootStack.Screen
+                  name={DrawerRoutes.ConfirmLogout}
+                  component={ConfirmLogoutModal}
+                />
+              </RootStack.Group>
+            </RootStack.Navigator>
           </NavigationContainer>
         </AuthenticationProvider>
       </ApiClientContext.Provider>
