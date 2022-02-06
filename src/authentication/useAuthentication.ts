@@ -2,10 +2,7 @@ import React from 'react';
 import {ID, UserProfile} from '../api/types';
 import {useStorage} from '../storage/useStorage';
 import {createEmptyUser} from '../user-profile/createEmptyUser';
-import {
-  getUserFromStorage,
-  useUserProfile,
-} from '../user-profile/useUserProfile';
+import {useUserProfileAPI} from '../user-profile/useUserProfileAPI';
 import {AuthenticationState} from './types';
 
 const STUB_USER_ID = 'stub_user_id';
@@ -15,11 +12,16 @@ export function useAuthentication(): AuthenticationState {
   const [user, setUser] = React.useState<UserProfile | null>();
 
   const storage = useStorage();
+  const {getUser, saveUser, deleteUser} = useUserProfileAPI();
 
   const onLogout = React.useCallback(async () => {
     await storage.setItem(AUTHENTICATION_STORAGE_KEY, null);
-    setUser(null);
-  }, [storage]);
+
+    if (user) {
+      setUser(null);
+      deleteUser(user!.id);
+    }
+  }, [storage, user, deleteUser]);
 
   React.useEffect(() => {
     (async () => {
@@ -29,17 +31,13 @@ export function useAuthentication(): AuthenticationState {
         return;
       }
 
-      const userFromStorage = await getUserFromStorage(storage, userId);
+      const userFromStorage = await getUser(userId);
 
       if (userFromStorage) {
         return setUser(userFromStorage);
       }
-
-      onLogout();
     })();
-  }, [storage, onLogout]);
-
-  const {saveUser} = useUserProfile(STUB_USER_ID);
+  }, [storage, getUser]);
 
   const onAuthenticate = React.useCallback(async () => {
     const emptyUser = createEmptyUser(STUB_USER_ID);
