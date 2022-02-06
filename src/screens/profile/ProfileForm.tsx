@@ -43,7 +43,7 @@ export function ProfileForm({
           placeholder="Full Name"
           value={name}
           onChange={createChangeListener('name')}
-          style={styles.input}
+          containerStyle={styles.input}
           defaultValue={name}
         />
 
@@ -67,28 +67,28 @@ export function ProfileForm({
           placeholder="Mobile Number"
           value={phoneNumber}
           onChange={createChangeListener('phoneNumber')}
-          style={styles.input}
+          containerStyle={styles.input}
           defaultValue={phoneNumber}
         />
         <TextInput
           placeholder="City"
           value={city}
           onChange={createChangeListener('city')}
-          style={styles.input}
+          containerStyle={styles.input}
           defaultValue={city}
         />
         <TextInput
           placeholder="Locality, area of street"
           value={locality}
           onChange={createChangeListener('locality')}
-          style={styles.input}
+          containerStyle={styles.input}
           defaultValue={locality}
         />
         <TextInput
           placeholder="Flat no., Building name"
           value={flatNumber}
           onChange={createChangeListener('flatNumber')}
-          style={styles.input}
+          containerStyle={styles.input}
           defaultValue={flatNumber}
         />
       </View>

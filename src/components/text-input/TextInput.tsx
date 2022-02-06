@@ -5,6 +5,7 @@ import {
   TextInputFocusEventData,
   Animated,
   Text,
+  View,
 } from 'react-native';
 import {useInputPlaceholderAnimation} from '../../animations/hooks/useInputPlaceholderAnimation';
 import {createPoint} from '../../utils/coodrinates/createPoint';
@@ -25,8 +26,12 @@ export function TextInput({
   onFocus: onInputFocus,
   onBlur: onInputBlur,
   value,
+  containerStyle,
+  children,
   ...rest
-}: React.ComponentProps<typeof Input>) {
+}: React.ComponentProps<typeof Input> & {
+  containerStyle?: React.ComponentProps<typeof View>['style'];
+}) {
   const [isFocused, setIsFocused] = React.useState(false);
   const inputRef = React.createRef<Input>();
 
@@ -66,9 +71,10 @@ export function TextInput({
   const isPlaceholderShifted = !!placeholder && (isFocused || !!value);
 
   return (
-    <>
+    <View style={[styles.root, containerStyle]}>
+      {children}
       <Input
-        style={[styles.root, style]}
+        style={[styles.input, style]}
         {...rest}
         onBlur={onBlur}
         onFocus={onFocus}
@@ -80,6 +86,6 @@ export function TextInput({
           <Text>{placeholder}</Text>
         </Animated.View>
       )}
-    </>
+    </View>
   );
 }
