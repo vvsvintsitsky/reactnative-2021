@@ -52,10 +52,15 @@ export function TextInput({
   > = React.useCallback(
     e => {
       setIsFocused(() => true);
-      startFocusAnimation();
       onInputFocus?.(e);
+
+      if (isFocused || value) {
+        return;
+      }
+
+      startFocusAnimation();
     },
-    [onInputFocus, startFocusAnimation],
+    [onInputFocus, startFocusAnimation, isFocused, value],
   );
 
   const onBlur: React.EventHandler<
