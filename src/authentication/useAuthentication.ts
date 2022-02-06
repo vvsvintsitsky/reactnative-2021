@@ -13,8 +13,9 @@ export function useAuthentication(): AuthenticationState {
 
   const storage = useStorage();
 
-  const onLogout = React.useCallback(() => {
-    return storage.setItem(AUTHENTICATION_STORAGE_KEY, null);
+  const onLogout = React.useCallback(async () => {
+    await storage.setItem(AUTHENTICATION_STORAGE_KEY, null);
+    setUser(null);
   }, [storage]);
 
   React.useEffect(() => {

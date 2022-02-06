@@ -8,12 +8,17 @@ export function useConfirmLogoutModal() {
   const navigation = useNavigation();
   const {onLogout} = useAuthenticationState();
 
-  const onCancel = React.useCallback(() => {
+  const goBack = React.useCallback(() => {
     navigation.goBack();
   }, [navigation]);
 
+  const onLogoutHandler = React.useCallback(() => {
+    onLogout();
+    goBack();
+  }, [onLogout, goBack]);
+
   return {
-    onLogout,
-    onCancel,
+    onLogout: onLogoutHandler,
+    onCancel: goBack,
   };
 }
