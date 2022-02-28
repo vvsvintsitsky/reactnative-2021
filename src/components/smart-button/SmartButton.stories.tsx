@@ -4,7 +4,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import {SmartButton, SmartButtonStatus} from './SmartButton';
 
-storiesOf('SmartButton', module).add('with text', () => (
+storiesOf('SmartButton', module).add('error status', () => (
   <SmartButton status={SmartButtonStatus.ERROR}>
     <Text>{text('ErrorSmartButton', 'ErrorSmartButton')}</Text>
   </SmartButton>
