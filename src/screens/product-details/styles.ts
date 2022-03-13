@@ -13,9 +13,6 @@ export const styles = StyleSheet.create({
   headerControls: {
     flexDirection: 'row',
   },
-  headerIcon: {
-    color: '#FFFFFF',
-  },
   cartButton: {
     marginLeft: 30,
   },

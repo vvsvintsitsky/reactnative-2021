@@ -1,15 +1,7 @@
 import React from 'react';
 import {ScrollView, View, Image, Text, RefreshControl} from 'react-native';
 
-import {TradeItem} from '../../api/types';
-
-import ArrowLeftIcon from '../../../assets/icons/ArrowLeft.svg';
-import HeartIcon from '../../../assets/icons/Heart.svg';
-import CartIcon from '../../../assets/icons/Cart.svg';
-
-import {Header} from '../../components/header/Header';
-
-import {styles as iconStyles} from '../../components/icon/styles';
+import {TradeItem, TradeItemOption} from '../../api/types';
 
 import {Slider} from '../../components/slider/Slider';
 import {TradeItemName} from '../../components/trade-item-name/TradeItemName';
@@ -18,7 +10,6 @@ import {Section} from '../../components/section/Section';
 import {styles as sectionStyles} from '../../components/section/styles';
 
 import {TextButton} from '../../components/text-button/TextButton';
-import {InteractiveContent} from '../../components/interactive-content/InteractiveContent';
 import {ShadowContainer} from '../../components/shadow-container/ShadowContainer';
 import {SingleSelect} from '../../components/single-select/SingleSelect';
 
@@ -29,11 +20,17 @@ export function ProductDetails({
   currentImageIndex,
   isLoading,
   refetch,
+  onAddToCart,
+  selectColor,
+  selectedColor,
 }: {
   tradeItem?: TradeItem;
   currentImageIndex: number;
   isLoading: boolean;
   refetch: () => void;
+  onAddToCart: () => void;
+  selectColor: (colorOption: TradeItemOption) => void;
+  selectedColor?: TradeItemOption;
 }) {
   return (
     <>
@@ -43,28 +40,6 @@ export function ProductDetails({
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={refetch} />
         }>
-        <Header style={styles.header}>
-          <InteractiveContent>
-            <ArrowLeftIcon
-              style={iconStyles.root}
-              color={styles.headerIcon.color}
-            />
-          </InteractiveContent>
-          <View style={styles.headerControls}>
-            <InteractiveContent>
-              <HeartIcon
-                style={iconStyles.root}
-                color={styles.headerIcon.color}
-              />
-            </InteractiveContent>
-            <InteractiveContent interactiveStyle={styles.cartButton}>
-              <CartIcon
-                style={iconStyles.root}
-                color={styles.headerIcon.color}
-              />
-            </InteractiveContent>
-          </View>
-        </Header>
         {tradeItem && (
           <>
             <View style={styles.slider}>
@@ -82,9 +57,11 @@ export function ProductDetails({
                 <TradeItemName name={tradeItem.name} />
                 <TradeItemPrice tradeItem={tradeItem} style={styles.price} />
               </View>
-              <Section title="Select Option" style={styles.sectionUnderline}>
+              <Section title="Select Color" style={styles.sectionUnderline}>
                 <SingleSelect
-                  options={tradeItem.options.map(option => option.id)}
+                  options={tradeItem.options}
+                  onSelect={selectColor}
+                  selectedValue={selectedColor}
                 />
               </Section>
               <Section title="Description">
@@ -103,7 +80,9 @@ export function ProductDetails({
           distance={2}
           startColor="#0000004D"
           sides={['bottom']}>
-          <TextButton style={styles.addToCart}>ADD TO CART</TextButton>
+          <TextButton style={styles.addToCart} onPress={onAddToCart}>
+            ADD TO CART
+          </TextButton>
         </ShadowContainer>
       )}
     </>
