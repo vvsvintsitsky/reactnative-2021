@@ -7,7 +7,12 @@ import {
   createStackNavigator,
   StackNavigationOptions,
 } from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from '@react-navigation/drawer';
 
 import {ApiClient} from './src/api/client/ApiClient';
 import {ApiClientContext} from './src/api/client/ApiClientContext';
@@ -29,10 +34,20 @@ import {DrawerRoutes} from './src/navigation/DrawerRoutes';
 import {TrashScreen} from './src/screens/trash/TrashScreen';
 import {Modals} from './src/navigation/Modals';
 import {LoginToContinueModal} from './src/modals/login-to-continue/LoginToContinueModal';
-import {useAuthentication} from './src/authentication/useAuthentication';
-import {AuthenticationContext} from './src/authentication/AuthenticationContext';
 import {SelectColorModal} from './src/modals/select-color/SelectColorModal';
 import {ProductAddedModal} from './src/modals/product-added/ProductAddedModal';
+import {ShareButton} from './src/share/ShareButton';
+import {ProfileScreen} from './src/screens/profile/ProfileScreen';
+import ProfileIcon from './assets/icons/Profile.svg';
+import {styles as iconStyles} from './src/components/icon/styles';
+import {StorageProvider} from './src/storage/StorageProvider';
+import {STORAGE_KEY} from './config';
+import {AuthenticationProvider} from './src/authentication/AuthenticationProvider';
+import {useAuthenticationState} from './src/authentication/useAuthenticationState';
+import {ConfirmLogoutModal} from './src/modals/confirm-logout/ConfirmLogoutModal';
+import {useTrackScreenName} from './src/useTrackScreenName';
+
+const RootStack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
 const MainRoutesStack = createStackNavigator();
@@ -99,27 +114,75 @@ function MainNavigationStack() {
   );
 }
 
-const App = () => {
-  const [apiClient] = React.useState(() => new ApiClient(API_BASE));
+function DrawerContent(props: DrawerContentComponentProps) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <ShareButton />
+    </DrawerContentScrollView>
+  );
+}
 
-  const {authentication, onAuthenticate} = useAuthentication();
+function DrawerNavigator() {
+  const {user} = useAuthenticationState();
 
   return (
-    <ApiClientContext.Provider value={apiClient}>
-      <AuthenticationContext.Provider value={{authentication, onAuthenticate}}>
-        <NavigationContainer>
-          <Drawer.Navigator
-            initialRouteName={DrawerRoutes.Main}
-            screenOptions={{headerShown: false}}>
-            <Drawer.Screen
-              name={DrawerRoutes.Main}
-              component={MainNavigationStack}
-            />
-            <Drawer.Screen name={DrawerRoutes.Trash} component={TrashScreen} />
-          </Drawer.Navigator>
-        </NavigationContainer>
-      </AuthenticationContext.Provider>
-    </ApiClientContext.Provider>
+    <Drawer.Navigator
+      initialRouteName={DrawerRoutes.Main}
+      screenOptions={{
+        headerShown: false,
+        headerStyle: headerOptions.headerStyle,
+        headerTintColor: headerOptions.headerTintColor,
+        headerTitleStyle: headerOptions.headerTitleStyle,
+        headerTitleAlign: headerOptions.headerTitleAlign,
+      }}
+      drawerContent={DrawerContent}>
+      <Drawer.Screen name={DrawerRoutes.Main} component={MainNavigationStack} />
+      {!!user && (
+        <Drawer.Screen
+          name={DrawerRoutes.Profile}
+          options={{
+            headerShown: true,
+            drawerIcon: () => <ProfileIcon style={iconStyles.root} />,
+            headerLeft: () => <ProductDetailsHeaderLeft />,
+            headerRight: () => <MainHeaderRight />,
+          }}>
+          {({navigation}) => (
+            <ProfileScreen user={user} navigation={navigation} />
+          )}
+        </Drawer.Screen>
+      )}
+      <Drawer.Screen name={DrawerRoutes.Trash} component={TrashScreen} />
+    </Drawer.Navigator>
+  );
+}
+
+const noop = () => undefined;
+
+const App = () => {
+  const [apiClient] = React.useState(() => new ApiClient(API_BASE));
+  const trackScreenName = useTrackScreenName({onRouteChange: noop});
+
+  return (
+    <StorageProvider storageKey={STORAGE_KEY}>
+      <ApiClientContext.Provider value={apiClient}>
+        <AuthenticationProvider>
+          <NavigationContainer onStateChange={trackScreenName}>
+            <RootStack.Navigator screenOptions={{headerShown: false}}>
+              <RootStack.Group>
+                <RootStack.Screen name="Root" component={DrawerNavigator} />
+              </RootStack.Group>
+              <RootStack.Group>
+                <RootStack.Screen
+                  name={DrawerRoutes.ConfirmLogout}
+                  component={ConfirmLogoutModal}
+                />
+              </RootStack.Group>
+            </RootStack.Navigator>
+          </NavigationContainer>
+        </AuthenticationProvider>
+      </ApiClientContext.Provider>
+    </StorageProvider>
   );
 };
 
