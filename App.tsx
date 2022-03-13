@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Config from 'react-native-config';
+
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 import {NavigationContainer} from '@react-navigation/native';
@@ -64,6 +66,10 @@ const headerOptions: StackNavigationOptions = {
   },
   headerTitleAlign: 'center',
 };
+
+if (!Config.ACCESS_TOKEN || !Config.GROUP_NAME) {
+  throw new Error('ACCESS_TOKEN or GROUP_NAME is missing');
+}
 
 function MainNavigationStack() {
   return (
