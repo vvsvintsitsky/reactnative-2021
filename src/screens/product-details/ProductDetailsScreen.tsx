@@ -16,11 +16,11 @@ export function ProductDetailsScreen({
     id: route.params.productId,
   });
 
-  const {authentication} = useAuthenticationState();
+  const {user} = useAuthenticationState();
   const [selectedColor, setSelectedColor] = React.useState<TradeItemOption>();
 
   const onAddToCart = React.useCallback(() => {
-    if (!authentication) {
+    if (!user) {
       return navigation.navigate(Modals.LoginToContinue);
     }
 
@@ -29,7 +29,7 @@ export function ProductDetailsScreen({
     }
 
     return navigation.navigate(Modals.ProductAddedToCart);
-  }, [navigation, authentication, selectedColor]);
+  }, [navigation, user, selectedColor]);
 
   return (
     <ProductDetails

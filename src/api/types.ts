@@ -4,8 +4,7 @@ export interface Identifiable {
   id: ID;
 }
 
-export interface TradeItemOption {
-  id: ID;
+export interface TradeItemOption extends Identifiable {
   name: string;
 }
 
@@ -17,4 +16,13 @@ export interface TradeItem extends Identifiable {
   currentPrice: number;
   hasDiscount: boolean;
   description: string;
+}
+
+export interface UserProfile extends Identifiable {
+  name: string;
+  phoneNumber: string;
+  city: string;
+  locality: string;
+  flatNumber: string;
+  imageUrl: string;
 }
