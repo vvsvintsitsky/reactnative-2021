@@ -14,7 +14,7 @@ export function useLoginToContinueModal() {
 
   const onLogin = React.useCallback(async () => {
     try {
-      await onAuthenticate(true);
+      await onAuthenticate();
     } catch (e) {
       return setLoginStatus(SmartButtonStatus.ERROR);
     }

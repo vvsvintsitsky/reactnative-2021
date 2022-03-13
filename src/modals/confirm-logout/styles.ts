@@ -1,11 +1,8 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  root: {
-    width: 125,
-    height: 40,
-  },
-  fullWidth: {
-    width: '100%',
+  button: {
+    marginRight: 20,
+    backgroundColor: '#DD6B55',
   },
 });
