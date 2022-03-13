@@ -45,6 +45,7 @@ import {STORAGE_KEY} from './config';
 import {AuthenticationProvider} from './src/authentication/AuthenticationProvider';
 import {useAuthenticationState} from './src/authentication/useAuthenticationState';
 import {ConfirmLogoutModal} from './src/modals/confirm-logout/ConfirmLogoutModal';
+import {useTrackScreenName} from './src/useTrackScreenName';
 
 const RootStack = createStackNavigator();
 
@@ -156,14 +157,17 @@ function DrawerNavigator() {
   );
 }
 
+const noop = () => undefined;
+
 const App = () => {
   const [apiClient] = React.useState(() => new ApiClient(API_BASE));
+  const trackScreenName = useTrackScreenName({onRouteChange: noop});
 
   return (
     <StorageProvider storageKey={STORAGE_KEY}>
       <ApiClientContext.Provider value={apiClient}>
         <AuthenticationProvider>
-          <NavigationContainer>
+          <NavigationContainer onStateChange={trackScreenName}>
             <RootStack.Navigator screenOptions={{headerShown: false}}>
               <RootStack.Group>
                 <RootStack.Screen name="Root" component={DrawerNavigator} />
