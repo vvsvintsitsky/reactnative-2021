@@ -1,8 +1,17 @@
 import {StyleSheet} from 'react-native';
+import {convertRgbaColorToString} from '../../utils/color/convertRgbaColorToString';
+import {createRgbaColor} from '../../utils/color/createRgbaColor';
+
+export const BACKGROUND_COLOR = createRgbaColor({
+  r: 0,
+  g: 138,
+  b: 206,
+  a: 1,
+});
 
 export const styles = StyleSheet.create({
   root: {
-    backgroundColor: '#008ACE',
+    backgroundColor: convertRgbaColorToString(BACKGROUND_COLOR),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,

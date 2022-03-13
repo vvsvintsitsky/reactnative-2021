@@ -14,7 +14,7 @@ export function Search({style}: {style?: ViewStyle}) {
   return (
     <View style={[textInputStyles.root, styles.root, style]}>
       <SearchIcon style={[iconStyles.root, styles.icon]} />
-      <TextInput style={styles.input} />
+      <TextInput style={styles.input} placeholder="Type something" />
     </View>
   );
 }
