@@ -189,20 +189,19 @@ android {
 
     flavorDimensions “env”
     productFlavors {
-      dev {
-        resValue “string”, “app_name”, “DevEnv”
-        applicationIdSuffix “.dev”
-      }
-      qa {
-        resValue “string”, “app_name”, “QAEnv”
-        applicationIdSuffix “.qa
-      }
-      prod {
-        resValue “string”, “app_name”, “ProdEnv”
-        applicationIdSuffix “”
-      }
+        dev {
+            resValue “string”, “app_name”, “DevEnv”
+            applicationIdSuffix “.dev”
+        }
+        qa {
+            resValue “string”, “app_name”, “QAEnv”
+            applicationIdSuffix “.qa
+        }
+        prod {
+            resValue “string”, “app_name”, “ProdEnv”
+            applicationIdSuffix “”
+        }
     }
-  }
 }
 
 dependencies {
